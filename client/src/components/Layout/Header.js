@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdLogin, MdLogout } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.header`
   height: 140px;
@@ -31,10 +32,20 @@ const Avatar = styled.div`
 `;
 
 function Header() {
+  const navigate = useNavigate();
+
+  const onClickLogo = () => {
+    navigate('/');
+  };
+
+  const onClickLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <Container>
-      <h1>Calendiary</h1>
-      <Avatar>
+      <h1 onClick={onClickLogo}>Calendiary</h1>
+      <Avatar onClick={onClickLogin}>
         <MdLogin />
         <MdLogout />
       </Avatar>
