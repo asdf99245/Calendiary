@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
   *,html,body {
     box-sizing: border-box;
+    font-family: 'MaruBuri-Regular';
   }
   
   *{
@@ -29,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
     color:${({ theme }) => theme.colors.base};
     padding:0;
     margin:0;
-    font-family: 'MaruBuri-Regular';
   }
 `;
 
