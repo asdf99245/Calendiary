@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import CalendarTemplate from '../components/Calendar/CalendarTemplate';
 
 const Container = styled.div`
   ${({ theme }) => theme.common.flexCenterColumn}
   margin-bottom: 70px;
 `;
 
-const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-
 function Calendar() {
-  return <Container></Container>;
+  return (
+    <Container>
+      <CalendarTemplate />
+    </Container>
+  );
 }
 
 export default Calendar;
