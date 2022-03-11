@@ -12,3 +12,13 @@
 4. 일기 내용 수정 (UPDATE)
 5. 일기 삭제 (DELETE)
 6. 로그인 / 회원가입 기능
+
+## 커밋 컨벤션을 최대한 지켜보자
+
+*feat (feature) : 기능 추가/수정 등
+*fix (bug fix) : 버그 수정
+*docs (documentation) : 문서 수정
+*style (formatting, missing semi colons, …) : 스타일 변경 (형식, 세미콜론 누락 등)
+*refactor : 리팩토링
+*test (when adding missing tests) : 테스트
+\*chore (maintain) : 빌드, 패키지 관련 (업데이트 등)
