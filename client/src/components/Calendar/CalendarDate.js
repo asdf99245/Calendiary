@@ -42,7 +42,7 @@ const Button = styled.button`
   }
 `;
 
-function CalendarDate({ today }) {
+function CalendarDate({ currentDate }) {
   const dispatch = useDispatch();
   const onClickPrev = () => dispatch(goPrev());
   const onClickNext = () => dispatch(goNext());
@@ -53,7 +53,7 @@ function CalendarDate({ today }) {
         <MdOutlineArrowBackIos />
       </Button>
       <Date>
-        <span>{today.format('YYYY-MM')}</span>
+        <span>{currentDate.format('YYYY-MM')}</span>
       </Date>
       <Button onClick={onClickNext}>
         <MdOutlineArrowForwardIos />

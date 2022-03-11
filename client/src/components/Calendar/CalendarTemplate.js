@@ -49,7 +49,7 @@ function CalendarTemplate() {
 
   return (
     <>
-      <CalendarDate today={currentDate} />
+      <CalendarDate currentDate={currentDate} />
       <CalendarWrapper>
         {week.map((w, i) => (
           <CalendarHeader key={i} idx={i}>
@@ -57,7 +57,7 @@ function CalendarTemplate() {
           </CalendarHeader>
         ))}
         {days.map((d, i) => (
-          <CalendarDay key={i} idx={i} day={d} today={currentDate} />
+          <CalendarDay key={i} idx={i} day={d} currentDate={currentDate} />
         ))}
       </CalendarWrapper>
     </>

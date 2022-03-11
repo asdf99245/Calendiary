@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -32,11 +33,11 @@ const Day = styled.div`
     `}
 `;
 
-function CalendarDay({ idx, day, today }) {
+function CalendarDay({ idx, day, currentDate }) {
   return (
     <Day
-      isCurrentMonth={day.get('M') === today.get('M')}
-      isToday={day.isSame(today, 'day')}
+      isCurrentMonth={day.get('M') === currentDate.get('M')}
+      isToday={day.isSame(dayjs(), 'day')}
       idx={idx}
     >
       {day.get('date')}
