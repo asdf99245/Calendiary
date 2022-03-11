@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import CalendarDate from './CalendarDate';
 import CalendarDay from './CalendarDay';
@@ -39,16 +40,16 @@ const CalendarHeader = styled.div`
 
 function CalendarTemplate() {
   const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const now = dayjs();
+  const currentDate = useSelector((state) => state.date.currentDate);
   const [days, setDays] = useState([]);
 
   useEffect(() => {
-    setDays(getDates(now));
-  }, []);
+    setDays(getDates(currentDate));
+  }, [currentDate]);
 
   return (
     <>
-      <CalendarDate today={now} />
+      <CalendarDate today={currentDate} />
       <CalendarWrapper>
         {week.map((w, i) => (
           <CalendarHeader key={i} idx={i}>
@@ -56,7 +57,7 @@ function CalendarTemplate() {
           </CalendarHeader>
         ))}
         {days.map((d, i) => (
-          <CalendarDay key={i} idx={i} day={d} today={now} />
+          <CalendarDay key={i} idx={i} day={d} today={currentDate} />
         ))}
       </CalendarWrapper>
     </>

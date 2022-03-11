@@ -4,6 +4,8 @@ import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
 } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { goNext, goPrev } from './../../modules/date';
 
 const Container = styled.div`
   display: flex;
@@ -41,15 +43,19 @@ const Button = styled.button`
 `;
 
 function CalendarDate({ today }) {
+  const dispatch = useDispatch();
+  const onClickPrev = () => dispatch(goPrev());
+  const onClickNext = () => dispatch(goNext());
+
   return (
     <Container>
-      <Button>
+      <Button onClick={onClickPrev}>
         <MdOutlineArrowBackIos />
       </Button>
       <Date>
         <span>{today.format('YYYY-MM')}</span>
       </Date>
-      <Button>
+      <Button onClick={onClickNext}>
         <MdOutlineArrowForwardIos />
       </Button>
     </Container>
