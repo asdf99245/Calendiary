@@ -47,7 +47,7 @@ function CalendarDate({ today }) {
         <MdOutlineArrowBackIos />
       </Button>
       <Date>
-        <span>{today.format('YYYY-MM-DD')}</span>
+        <span>{today.format('YYYY-MM')}</span>
       </Date>
       <Button>
         <MdOutlineArrowForwardIos />
