@@ -6,6 +6,7 @@ const ButtonTemplate = styled.button`
   border: none;
   background: ${({ theme }) => theme.colors.blue_2};
   color: white;
+  border-radius: ${({ theme }) => theme.borderRadius.base};
   padding: ${({ theme }) => theme.spaces.base};
   ${({ theme }) => theme.common.boxShadow};
   cursor: pointer;
