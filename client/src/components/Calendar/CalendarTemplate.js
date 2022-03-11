@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { useSelector } from 'react-redux';
-import dayjs from 'dayjs';
+import { useSelector, useDispatch } from 'react-redux';
 import CalendarDate from './CalendarDate';
 import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
+import Button from './../common/Button';
+import { setToday } from '../../modules/date';
 
 const CalendarWrapper = styled.div`
   position: relative;
@@ -38,14 +39,25 @@ const CalendarHeader = styled.div`
   }}
 `;
 
+const ButtonToday = styled(Button)`
+  position: absolute;
+  top: -35px;
+  right: 40px;
+  padding: ${({ theme }) => theme.spaces.small}
+    ${({ theme }) => theme.spaces.lg};
+`;
+
 function CalendarTemplate() {
   const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const currentDate = useSelector((state) => state.date.currentDate);
+  const dispatch = useDispatch();
   const [days, setDays] = useState([]);
 
   useEffect(() => {
     setDays(getDates(currentDate));
   }, [currentDate]);
+
+  const onClickToday = () => dispatch(setToday());
 
   return (
     <>
@@ -59,6 +71,7 @@ function CalendarTemplate() {
         {days.map((d, i) => (
           <CalendarDay key={i} idx={i} day={d} currentDate={currentDate} />
         ))}
+        <ButtonToday onClick={onClickToday}>TODAY</ButtonToday>
       </CalendarWrapper>
     </>
   );
