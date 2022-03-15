@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
+  MdSearch,
+  MdSearchOff,
 } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { goNext, goPrev } from './../../modules/date';
+import { goNext, goPrev, setDay } from './../../modules/date';
+import CalendarSelect from './CalendarSelect';
 
 const Container = styled.div`
   display: flex;
@@ -42,10 +45,27 @@ const Button = styled.button`
   }
 `;
 
+const ButtonSearch = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: -15px;
+  cursor: pointer;
+`;
+
 function CalendarDate({ currentDate }) {
+  const [openSelect, setOpenSelect] = useState(false);
   const dispatch = useDispatch();
-  const onClickPrev = () => dispatch(goPrev());
-  const onClickNext = () => dispatch(goNext());
+  const onToggleSelect = () => setOpenSelect(!openSelect);
+  const onCloseSelect = () => setOpenSelect(false);
+  const onClickPrev = () => {
+    dispatch(goPrev());
+    onCloseSelect();
+  };
+  const onClickNext = () => {
+    dispatch(goNext());
+    onCloseSelect();
+  };
+  const onSetDay = (year, month) => dispatch(setDay({ year, month }));
 
   return (
     <Container>
@@ -54,6 +74,16 @@ function CalendarDate({ currentDate }) {
       </Button>
       <Date>
         <span>{currentDate.format('YYYY-MM')}</span>
+        <ButtonSearch onClick={onToggleSelect}>
+          {openSelect ? <MdSearchOff /> : <MdSearch />}
+        </ButtonSearch>
+        {openSelect && (
+          <CalendarSelect
+            currentDate={currentDate}
+            onSetDay={onSetDay}
+            onClose={onCloseSelect}
+          />
+        )}
       </Date>
       <Button onClick={onClickNext}>
         <MdOutlineArrowForwardIos />
