@@ -51,7 +51,11 @@ const common = {
   `,
   boxShadow_2: `
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, 
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;`,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  `,
+  boxShadow_3: `
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  `,
   boxShadow_yellow: `
     box-shadow: 0px 1px 8px #fdcb6e;
   `,
