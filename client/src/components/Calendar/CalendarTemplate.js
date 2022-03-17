@@ -6,6 +6,7 @@ import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
 import Button from './../common/Button';
 import { setToday } from '../../modules/date';
+import { modalOpen } from './../../modules/modal';
 
 const CalendarWrapper = styled.div`
   position: relative;
@@ -58,6 +59,7 @@ function CalendarTemplate() {
   }, [currentDate]);
 
   const onClickToday = () => dispatch(setToday());
+  const onClickDay = (date) => dispatch(modalOpen(date));
 
   return (
     <>
@@ -69,7 +71,13 @@ function CalendarTemplate() {
           </CalendarHeader>
         ))}
         {days.map((d, i) => (
-          <CalendarDay key={i} idx={i} day={d} currentDate={currentDate} />
+          <CalendarDay
+            key={i}
+            idx={i}
+            day={d}
+            currentDate={currentDate}
+            onClick={onClickDay}
+          />
         ))}
         <ButtonToday onClick={onClickToday}>TODAY</ButtonToday>
       </CalendarWrapper>

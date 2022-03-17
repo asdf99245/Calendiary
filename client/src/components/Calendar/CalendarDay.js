@@ -33,12 +33,13 @@ const Day = styled.div`
     `}
 `;
 
-function CalendarDay({ idx, day, currentDate }) {
+function CalendarDay({ idx, day, currentDate, onClick }) {
   return (
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}
       isToday={day.isSame(dayjs(), 'day')}
       idx={idx}
+      onClick={() => onClick(day.format('YYYY-MM-DD'))}
     >
       {day.get('date')}
     </Day>
