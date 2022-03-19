@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.STRING(50),
       },
       user_password: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
       },
       user_name: {
         type: Sequelize.STRING(50),

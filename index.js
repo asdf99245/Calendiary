@@ -3,7 +3,14 @@ const app = express();
 const port = process.env.PORT || 5000;
 const api = require('./routes/api');
 const { sequelize } = require('./database/models');
+const cors = require('cors');
 
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

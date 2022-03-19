@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdLogin, MdLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
+import { userLogout } from '../../modules/user';
+import { onLogout } from '../../api/authAPI';
 
 const Container = styled.header`
   height: 140px;
@@ -32,7 +36,14 @@ const Avatar = styled.div`
 `;
 
 function Header() {
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { mutate: logout } = useMutation(() => onLogout(), {
+    onSuccess: (res) => {
+      console.log(res.data.message);
+    },
+  });
 
   const onClickLogo = () => {
     navigate('/');
@@ -41,13 +52,16 @@ function Header() {
   const onClickLogin = () => {
     navigate('/login');
   };
+  const onClickLogout = () => {
+    logout();
+    dispatch(userLogout());
+  };
 
   return (
     <Container>
       <h1 onClick={onClickLogo}>Calendiary</h1>
-      <Avatar onClick={onClickLogin}>
-        <MdLogin />
-        <MdLogout />
+      <Avatar onClick={isLogin ? onClickLogout : onClickLogin}>
+        {isLogin ? <MdLogout title="로그아웃" /> : <MdLogin title="로그인" />}
       </Avatar>
     </Container>
   );
