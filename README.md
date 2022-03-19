@@ -13,6 +13,26 @@
 5. 일기 삭제 (DELETE)
 6. 로그인 / 회원가입 기능
 
+## 테이블 구조(ERD)
+
+<img src="https://user-images.githubusercontent.com/39851220/159119090-319651db-9cee-412e-87b9-28a220deb12b.PNG" width="700" height="400"/>
+
+USERS 테이블
+* user_id (Primary key) 유저아이디
+* user_password 유저비밀번호
+* user_name 유저이름
+* createdAt 생성시간
+* updatedAt 변경시간
+
+DIARIES 테이블
+* id (Primary key) auto_increment
+* date 일기 날짜
+* text 일기 내용
+* imgurl 일기에 연결된 사진의 url
+* createdAt 생성시간
+* updatedAt 변경시간
+* user_id (Foreign key: user_id(USERS)) 일기 작성한 유저 아이디
+
 ## 커밋 컨벤션을 최대한 지켜보자
 
 - feat (feature) : 기능 추가/수정 등
