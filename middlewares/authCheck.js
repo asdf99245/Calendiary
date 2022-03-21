@@ -11,6 +11,6 @@ exports.authCheck = (req, res, next) => {
       res.status(401).send('unauthorized');
     }
   } catch (err) {
-    res.send(401).send('token expired');
+    res.status(401).send('token expired');
   }
 };
