@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { useQuery } from 'react-query';
+import { setToday } from '../../modules/date';
+import { modalOpen } from './../../modules/modal';
+import { useNavigate } from 'react-router-dom';
+import { getDiaries } from '../../api/diaryAPI';
 import CalendarDate from './CalendarDate';
 import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
 import Button from './../common/Button';
-import { setToday } from '../../modules/date';
-import { modalOpen } from './../../modules/modal';
 
 const CalendarWrapper = styled.div`
   position: relative;
@@ -51,15 +54,28 @@ const ButtonToday = styled(Button)`
 function CalendarTemplate() {
   const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const currentDate = useSelector((state) => state.date.currentDate);
+  const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
   const [days, setDays] = useState([]);
+  const [diaries, setDiaries] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setDays(getDates(currentDate));
   }, [currentDate]);
 
   const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date) => dispatch(modalOpen(date));
+  const onClickDay = (date) => {
+    if (!isLogin) navigate('/login');
+    else dispatch(modalOpen(date));
+  };
+
+  const { isLoading, data, error } = useQuery('diaries', getDiaries, {
+    onSuccess: (res) => {
+      setDiaries(res.data);
+    },
+    onError: (err) => console.log(err),
+  });
 
   return (
     <>
@@ -76,6 +92,7 @@ function CalendarTemplate() {
             idx={i}
             day={d}
             currentDate={currentDate}
+            diaries={diaries}
             onClick={onClickDay}
           />
         ))}

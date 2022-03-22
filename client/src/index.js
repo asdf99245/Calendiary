@@ -10,7 +10,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const store = createStore(rootReducer, composeWithDevTools());
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>

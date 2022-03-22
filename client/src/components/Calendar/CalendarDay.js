@@ -31,13 +31,22 @@ const Day = styled.div`
     css`
       ${({ theme }) => theme.common.boxShadow_yellow};
     `}
+
+  ${(props) =>
+    props.isDiary &&
+    css`
+      background-color: #fff3bf;
+      ${({ theme }) => theme.common.boxShadow_2};
+      border-radius: ${({ theme }) => theme.borderRadius.base};
+    `}
 `;
 
-function CalendarDay({ idx, day, currentDate, onClick }) {
+function CalendarDay({ idx, day, currentDate, diaries, onClick }) {
   return (
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}
       isToday={day.isSame(dayjs(), 'day')}
+      isDiary={diaries.some((a) => day.isSame(dayjs(a.date), 'day'))}
       idx={idx}
       onClick={() => onClick(day.format('YYYY-MM-DD'))}
     >
