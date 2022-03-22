@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../common/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalClose } from '../../modules/modal';
 import { MdClose } from 'react-icons/md';
+import ModalForm from './ModalForm';
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -24,7 +24,7 @@ const ModalWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 640px;
-  min-height: 640px;
+  max-height: 640px;
   background-color: white;
   z-index: 100;
   border-radius: ${({ theme }) => theme.borderRadius.base};
@@ -51,23 +51,6 @@ const ButtonClose = styled(MdClose)`
   cursor: pointer;
 `;
 
-const ModalBody = styled.div`
-  flex: 1;
-  padding: ${({ theme }) => theme.spaces.xl};
-`;
-
-const ModalFooter = styled.div`
-  display: flex;
-  height: 50px;
-  width: 100%;
-`;
-
-const ModalButton = styled(Button)`
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-`;
-
 function ModalTemplate() {
   const modalDate = useSelector((state) => state.modal.modalDate);
   const dispatch = useDispatch();
@@ -81,11 +64,7 @@ function ModalTemplate() {
           {modalDate}
           <ButtonClose onClick={onClose} />
         </ModalHeader>
-        <ModalBody>모달 바디</ModalBody>
-        <ModalFooter>
-          <ModalButton>확인</ModalButton>
-          <ModalButton>취소</ModalButton>
-        </ModalFooter>
+        <ModalForm date={modalDate} />
       </ModalWrapper>
     </>
   );
