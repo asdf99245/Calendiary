@@ -6,6 +6,7 @@ module.exports = {
     const user_id = req.decoded.id;
     try {
       const results = await Diary.findAll({
+        attributes: ['date', 'text', 'imgurl'],
         where: {
           user_id,
         },

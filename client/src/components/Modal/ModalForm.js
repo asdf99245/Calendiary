@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { onWrite } from '../../api/diaryAPI';
 import Button from '../common/Button';
 import ModalWrite from './ModalWrite';
+import ModalPost from './ModalPost';
 
 const Form = styled.form`
   display: flex;
@@ -15,7 +16,6 @@ const Form = styled.form`
 const ModalBody = styled.div`
   flex: 1;
   padding: ${({ theme }) => theme.spaces.xl};
-  overflow-y: auto;
 `;
 
 const ModalFooter = styled.div`
@@ -30,7 +30,7 @@ const ModalButton = styled(Button)`
   border-radius: 0;
 `;
 
-function ModalForm({ date }) {
+function ModalForm({ date, modalType, modalText }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
@@ -45,7 +45,7 @@ function ModalForm({ date }) {
       console.log(err);
     },
   });
-  const [text, setText] = useState('');
+  const [text, setText] = useState(modalText);
   const onChange = (e) => {
     setText(e.target.value);
   };
@@ -58,10 +58,13 @@ function ModalForm({ date }) {
   return (
     <Form onSubmit={onSubmit}>
       <ModalBody>
-        <ModalWrite text={text} onChange={onChange} />
+        {modalType === 'post' && <ModalPost text={modalText} />}
+        {modalType === 'write' && (
+          <ModalWrite text={text} onChange={onChange} />
+        )}
       </ModalBody>
       <ModalFooter>
-        <ModalButton>확인</ModalButton>
+        <ModalButton>등록</ModalButton>
         <ModalButton type="button">취소</ModalButton>
       </ModalFooter>
     </Form>

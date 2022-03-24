@@ -65,16 +65,23 @@ function CalendarTemplate() {
   }, [currentDate]);
 
   const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date) => {
-    if (!isLogin) navigate('/login');
-    else dispatch(modalOpen(date));
+  const onClickDay = (date, type, text = '') => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    } else {
+      dispatch(modalOpen([date, type, text]));
+    }
   };
 
   const { isLoading, data, error } = useQuery('diaries', getDiaries, {
     onSuccess: (res) => {
       setDiaries(res.data);
     },
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      console.log(err);
+    },
+    retry: false,
   });
 
   return (

@@ -7,6 +7,7 @@ const Day = styled.div`
   padding: ${({ theme }) => theme.spaces.small};
   font-weight: 700;
   cursor: pointer;
+  display: flex;
 
   ${(props) => {
     const mod = props.idx % 7;
@@ -35,20 +36,31 @@ const Day = styled.div`
   ${(props) =>
     props.isDiary &&
     css`
-      background-color: #fff3bf;
+      background: ${({ theme }) => theme.colors.gray_3};
       ${({ theme }) => theme.common.boxShadow_2};
       border-radius: ${({ theme }) => theme.borderRadius.base};
     `}
 `;
 
 function CalendarDay({ idx, day, currentDate, diaries, onClick }) {
+  const onClickDay = () => {
+    const filtered = diaries.filter((diary) =>
+      day.isSame(dayjs(diary.date), 'day')
+    );
+    const date = day.format('YYYY-MM-DD');
+    if (filtered.length > 0) {
+      onClick(date, 'post', filtered[0].text);
+    } else {
+      onClick(date, 'write');
+    }
+  };
   return (
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}
       isToday={day.isSame(dayjs(), 'day')}
       isDiary={diaries.some((a) => day.isSame(dayjs(a.date), 'day'))}
       idx={idx}
-      onClick={() => onClick(day.format('YYYY-MM-DD'))}
+      onClick={onClickDay}
     >
       {day.get('date')}
     </Day>
