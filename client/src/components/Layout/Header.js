@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { MdLogin, MdLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { userLogout } from '../../modules/user';
 import { onLogout } from '../../api/authAPI';
+import axios from 'axios';
 
 const Container = styled.header`
   height: 140px;
@@ -39,9 +40,12 @@ function Header() {
   const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { mutate: logout } = useMutation(() => onLogout(), {
     onSuccess: (res) => {
       console.log(res.data.message);
+      axios.defaults.headers.common['Authorization'] = '';
+      queryClient.invalidateQueries('diaries');
     },
   });
 
