@@ -30,7 +30,7 @@ const ModalButton = styled(Button)`
   border-radius: 0;
 `;
 
-function ModalForm({ date, modalType, modalText }) {
+function ModalForm({ date, modalType, modalText, onClose }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
@@ -65,7 +65,9 @@ function ModalForm({ date, modalType, modalText }) {
       </ModalBody>
       <ModalFooter>
         <ModalButton>등록</ModalButton>
-        <ModalButton type="button">취소</ModalButton>
+        <ModalButton type="button" onClick={onClose}>
+          취소
+        </ModalButton>
       </ModalFooter>
     </Form>
   );

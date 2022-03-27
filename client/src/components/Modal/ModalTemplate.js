@@ -24,7 +24,6 @@ const ModalWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 640px;
-  max-height: 640px;
   background-color: white;
   z-index: 100;
   border-radius: ${({ theme }) => theme.borderRadius.base};
@@ -70,6 +69,7 @@ function ModalTemplate() {
           date={modalDate}
           modalType={modalType}
           modalText={modalText}
+          onClose={onClose}
         />
       </ModalWrapper>
     </>
