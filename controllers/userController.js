@@ -9,6 +9,35 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 module.exports = {
+  silentRefresh: async (req, res) => {
+    const { refreshToken } = req.cookies;
+    if (refreshToken) {
+      const verifyRefreshToken = verifyToken(refreshToken);
+      if (verifyRefreshToken.id) {
+        id = verifyRefreshToken.id;
+        const accessToken = makeAccessToken(id);
+        const refreshToken = makeRefreshToken(id);
+        try {
+          const result = await User.findOne({ where: { user_id: id } });
+          const { user_id, user_name } = result;
+          res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+          });
+          res.json({
+            success: true,
+            status: 200,
+            accessToken,
+            user_id,
+            user_name,
+          });
+        } catch (err) {
+          throw err;
+        }
+      }
+    } else {
+      res.status(401).send('Refresh failed');
+    }
+  },
   login: async (req, res) => {
     const { user_id, user_password } = req.body;
     try {
