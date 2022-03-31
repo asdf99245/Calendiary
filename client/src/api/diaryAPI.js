@@ -9,4 +9,8 @@ module.exports = {
     const response = await axios.get('/api/calendar/diaries');
     return response;
   },
+  onDelete: async (id) => {
+    const response = await axios.delete(`/api/calendar/diary/${id}`);
+    return response;
+  },
 };

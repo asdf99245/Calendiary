@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { modalClose } from '../../modules/modal';
 import { useMutation, useQueryClient } from 'react-query';
-import { onWrite } from '../../api/diaryAPI';
+import { onDelete, onWrite } from '../../api/diaryAPI';
 import Button from '../common/Button';
 import ModalWrite from './ModalWrite';
 import ModalPost from './ModalPost';
@@ -16,6 +16,8 @@ const Form = styled.form`
 const ModalBody = styled.div`
   flex: 1;
   padding: ${({ theme }) => theme.spaces.xl};
+  max-height: 560px;
+  overflow-y: scroll;
 `;
 
 const ModalFooter = styled.div`
@@ -30,7 +32,7 @@ const ModalButton = styled(Button)`
   border-radius: 0;
 `;
 
-function ModalForm({ date, modalType, modalText, onClose }) {
+function ModalForm({ date, modalType, modalText, id, onClose }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
@@ -45,6 +47,15 @@ function ModalForm({ date, modalType, modalText, onClose }) {
       console.log(err);
     },
   });
+  const { mutate: deleteDiary } = useMutation((id) => onDelete(id), {
+    onSuccess: (res) => {
+      if (res.data.success) {
+        alert(res.data.message);
+        queryClient.invalidateQueries('diaries');
+        dispatch(modalClose());
+      }
+    },
+  });
   const [text, setText] = useState(modalText);
   const onChange = (e) => {
     setText(e.target.value);
@@ -52,7 +63,11 @@ function ModalForm({ date, modalType, modalText, onClose }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    writeDiary({ date, text });
+    if (modalType === 'write') {
+      writeDiary({ date, text });
+    } else if (modalType === 'post') {
+      deleteDiary(id);
+    }
   };
 
   return (
@@ -64,7 +79,7 @@ function ModalForm({ date, modalType, modalText, onClose }) {
         )}
       </ModalBody>
       <ModalFooter>
-        <ModalButton>등록</ModalButton>
+        <ModalButton>{modalType === 'write' ? '등록' : '삭제'}</ModalButton>
         <ModalButton type="button" onClick={onClose}>
           취소
         </ModalButton>

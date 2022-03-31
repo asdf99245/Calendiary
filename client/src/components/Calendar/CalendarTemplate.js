@@ -65,12 +65,12 @@ function CalendarTemplate() {
   }, [currentDate]);
 
   const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date, type, text = '') => {
+  const onClickDay = (date, type, text = '', id = null) => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');
       navigate('/login');
     } else {
-      dispatch(modalOpen([date, type, text]));
+      dispatch(modalOpen([date, type, text, id]));
     }
   };
 

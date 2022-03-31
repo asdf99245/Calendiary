@@ -13,6 +13,7 @@ const initialState = {
   modalDate: null,
   modalText: '',
   modalType: null,
+  id: null,
 };
 
 const modal = handleActions(
@@ -23,6 +24,7 @@ const modal = handleActions(
       modalDate: action.payload[0],
       modalType: action.payload[1],
       modalText: action.payload[2],
+      id: action.payload[3],
     }),
     [MODAL_CLOSE]: (state) => ({
       ...state,

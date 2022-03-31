@@ -49,7 +49,8 @@ function CalendarDay({ idx, day, currentDate, diaries, onClick }) {
     );
     const date = day.format('YYYY-MM-DD');
     if (filtered.length > 0) {
-      onClick(date, 'post', filtered[0].text);
+      console.log(filtered[0]);
+      onClick(date, 'post', filtered[0].text, filtered[0].id);
     } else {
       onClick(date, 'write');
     }
