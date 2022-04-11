@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { setToday } from '../../modules/date';
 import { modalOpen } from './../../modules/modal';
+import { setDiary } from '../../modules/diary';
 import { useNavigate } from 'react-router-dom';
 import { getDiaries } from '../../api/diaryAPI';
 import CalendarDate from './CalendarDate';
@@ -70,6 +71,7 @@ function CalendarTemplate() {
       alert('로그인이 필요합니다.');
       navigate('/login');
     } else {
+      dispatch(setDiary([id, '', text]));
       dispatch(modalOpen([date, type, text, id]));
     }
   };

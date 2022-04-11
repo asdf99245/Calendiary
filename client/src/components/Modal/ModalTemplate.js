@@ -51,9 +51,8 @@ const ButtonClose = styled(MdClose)`
 `;
 
 function ModalTemplate() {
-  const { modalDate, modalType, modalText, id } = useSelector(
-    (state) => state.modal
-  );
+  const { modalDate, modalType } = useSelector((state) => state.modal);
+  const { diaryId, diaryText } = useSelector((state) => state.diary);
   const dispatch = useDispatch();
   const onClose = () => dispatch(modalClose());
 
@@ -68,8 +67,8 @@ function ModalTemplate() {
         <ModalForm
           date={modalDate}
           modalType={modalType}
-          modalText={modalText}
-          id={id}
+          diaryText={diaryText}
+          diaryId={diaryId}
           onClose={onClose}
         />
       </ModalWrapper>

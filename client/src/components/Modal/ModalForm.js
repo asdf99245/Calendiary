@@ -32,7 +32,7 @@ const ModalButton = styled(Button)`
   border-radius: 0;
 `;
 
-function ModalForm({ date, modalType, modalText, id, onClose }) {
+function ModalForm({ date, modalType, diaryId, diaryText, onClose }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
@@ -56,7 +56,7 @@ function ModalForm({ date, modalType, modalText, id, onClose }) {
       }
     },
   });
-  const [text, setText] = useState(modalText);
+  const [text, setText] = useState(diaryText);
   const onChange = (e) => {
     setText(e.target.value);
   };
@@ -66,14 +66,14 @@ function ModalForm({ date, modalType, modalText, id, onClose }) {
     if (modalType === 'write') {
       writeDiary({ date, text });
     } else if (modalType === 'post') {
-      deleteDiary(id);
+      deleteDiary(diaryId);
     }
   };
 
   return (
     <Form onSubmit={onSubmit}>
       <ModalBody>
-        {modalType === 'post' && <ModalPost text={modalText} />}
+        {modalType === 'post' && <ModalPost text={diaryText} />}
         {modalType === 'write' && (
           <ModalWrite text={text} onChange={onChange} />
         )}
