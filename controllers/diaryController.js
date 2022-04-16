@@ -7,7 +7,7 @@ module.exports = {
     const user_id = req.decoded.id;
     try {
       const results = await Diary.findAll({
-        attributes: ['id', 'date', 'text', 'imgurl'],
+        attributes: ['id', 'date', 'title', 'text', 'imgurl'],
         where: {
           user_id,
         },
@@ -18,10 +18,10 @@ module.exports = {
     }
   },
   diary: async (req, res) => {
-    const { date, text } = req.body;
+    const { date, title, text } = req.body;
     const user_id = req.decoded.id;
     try {
-      await Diary.create({ date, text, user_id });
+      await Diary.create({ date, title, text, user_id });
       res.json({
         success: true,
         code: 201,

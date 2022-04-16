@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   Diary.init(
     {
       date: DataTypes.DATE,
+      title: DataTypes.STRING,
       text: DataTypes.STRING(10000),
       imgurl: DataTypes.STRING(200),
     },

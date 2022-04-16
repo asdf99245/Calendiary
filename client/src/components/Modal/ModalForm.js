@@ -32,7 +32,14 @@ const ModalButton = styled(Button)`
   border-radius: 0;
 `;
 
-function ModalForm({ date, modalType, diaryId, diaryText, onClose }) {
+function ModalForm({
+  date,
+  modalType,
+  diaryId,
+  diaryTitle,
+  diaryText,
+  onClose,
+}) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
@@ -56,15 +63,28 @@ function ModalForm({ date, modalType, diaryId, diaryText, onClose }) {
       }
     },
   });
-  const [text, setText] = useState(diaryText);
+
+  const [diary, setDiary] = useState({
+    title: '',
+    text: '',
+  });
+  const { title, text } = diary;
   const onChange = (e) => {
-    setText(e.target.value);
+    const { id, value } = e.target;
+    setDiary({
+      ...diary,
+      [id]: value,
+    });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (modalType === 'write') {
-      writeDiary({ date, text });
+      if (!title.trim() || !text.trim()) {
+        alert('제목과 내용을 모두 작성해주세요.');
+        return;
+      }
+      writeDiary({ date, title, text });
     } else if (modalType === 'post') {
       deleteDiary(diaryId);
     }
@@ -73,9 +93,11 @@ function ModalForm({ date, modalType, diaryId, diaryText, onClose }) {
   return (
     <Form onSubmit={onSubmit}>
       <ModalBody>
-        {modalType === 'post' && <ModalPost text={diaryText} />}
+        {modalType === 'post' && (
+          <ModalPost title={diaryTitle} text={diaryText} />
+        )}
         {modalType === 'write' && (
-          <ModalWrite text={text} onChange={onChange} />
+          <ModalWrite diary={diary} onChange={onChange} />
         )}
       </ModalBody>
       <ModalFooter>

@@ -9,9 +9,7 @@ export const modalClose = createAction(MODAL_CLOSE);
 const initialState = {
   open: false,
   modalDate: null,
-  modalText: '',
   modalType: null,
-  id: null,
 };
 
 const modal = handleActions(

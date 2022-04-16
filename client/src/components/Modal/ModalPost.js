@@ -9,8 +9,17 @@ const Contents = styled.div`
   overflow-y: auto;
 `;
 
-function ModalPost({ text }) {
-  return <Contents>{text}</Contents>;
+const Title = styled.h1`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+`;
+
+function ModalPost({ title, text }) {
+  return (
+    <>
+      <Title>{title}</Title>
+      <Contents>{text}</Contents>
+    </>
+  );
 }
 
 export default ModalPost;
