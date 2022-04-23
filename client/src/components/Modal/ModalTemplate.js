@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalClose } from '../../modules/modal';
@@ -57,6 +57,13 @@ function ModalTemplate() {
   );
   const dispatch = useDispatch();
   const onClose = () => dispatch(modalClose());
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   return (
     <>
