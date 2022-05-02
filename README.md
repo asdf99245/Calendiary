@@ -28,6 +28,7 @@ USERS 테이블
 DIARIES 테이블
 
 - id (Primary key) auto_increment
+- title 일기 제목
 - date 일기 날짜
 - text 일기 내용
 - imgurl 일기에 연결된 사진의 url
@@ -35,7 +36,7 @@ DIARIES 테이블
 - updatedAt 변경시간
 - user_id (Foreign key: user_id(USERS)) 일기 작성한 유저 아이디
 
-## 커밋 컨벤션을 최대한 지켜보자
+## 커밋 컨벤션을 지켜보자
 
 - feat (feature) : 기능 추가/수정 등
 - fix (bug fix) : 버그 수정
