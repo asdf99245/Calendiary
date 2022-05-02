@@ -1,7 +1,7 @@
 # 개인 프로젝트 - Calendiary
 
-일기를 기록 할 수 있는 달력 만들어보기. CRUD 적용하기.
-프론트엔드: React Framework 사용. Redux 사용하여 전역으로 상태 관리해보기.
+일기를 기록 할 수 있는 달력. CRUD 구현.  
+프론트엔드: React Framework 사용. Redux 사용하여 전역으로 상태 관리.  
 백엔드: node.js 사용 , 데이터베이스 : MYSQL
 
 ## 기능
@@ -15,23 +15,25 @@
 
 ## 테이블 구조(ERD)
 
-<img src="https://user-images.githubusercontent.com/39851220/159119090-319651db-9cee-412e-87b9-28a220deb12b.PNG" width="700" height="400"/>
+![erd](https://user-images.githubusercontent.com/39851220/166206809-5f132118-8fcd-4829-b8d9-81091b50aec3.PNG)
 
 USERS 테이블
-* user_id (Primary key) 유저아이디
-* user_password 유저비밀번호
-* user_name 유저이름
-* createdAt 생성시간
-* updatedAt 변경시간
+
+- user_id (Primary key) 유저아이디
+- user_password 유저비밀번호
+- user_name 유저이름
+- createdAt 생성시간
+- updatedAt 변경시간
 
 DIARIES 테이블
-* id (Primary key) auto_increment
-* date 일기 날짜
-* text 일기 내용
-* imgurl 일기에 연결된 사진의 url
-* createdAt 생성시간
-* updatedAt 변경시간
-* user_id (Foreign key: user_id(USERS)) 일기 작성한 유저 아이디
+
+- id (Primary key) auto_increment
+- date 일기 날짜
+- text 일기 내용
+- imgurl 일기에 연결된 사진의 url
+- createdAt 생성시간
+- updatedAt 변경시간
+- user_id (Foreign key: user_id(USERS)) 일기 작성한 유저 아이디
 
 ## 커밋 컨벤션을 최대한 지켜보자
 
