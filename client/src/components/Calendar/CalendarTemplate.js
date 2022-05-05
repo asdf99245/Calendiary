@@ -66,12 +66,12 @@ function CalendarTemplate() {
   }, [currentDate]);
 
   const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date, type, text = '', title, id = null) => {
+  const onClickDay = (date, type, text = '', title, id = null, imgurl) => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');
       navigate('/login');
     } else {
-      dispatch(setDiary([id, title, text]));
+      dispatch(setDiary([id, title, text, imgurl]));
       dispatch(modalOpen([date, type]));
     }
   };

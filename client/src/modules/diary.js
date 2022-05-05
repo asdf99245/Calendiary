@@ -8,6 +8,7 @@ const initialState = {
   diaryId: null,
   diaryTitle: '',
   diaryText: '',
+  diaryImg: null,
 };
 
 const diary = handleActions(
@@ -17,6 +18,7 @@ const diary = handleActions(
       diaryId: action.payload[0],
       diaryTitle: action.payload[1],
       diaryText: action.payload[2],
+      diaryImg: action.payload[3],
     }),
   },
   initialState

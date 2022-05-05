@@ -11,6 +11,7 @@ import ModalPost from './ModalPost';
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  min-height: 500px;
 `;
 
 const ModalBody = styled.div`
@@ -38,8 +39,14 @@ function ModalForm({
   diaryId,
   diaryTitle,
   diaryText,
+  diaryImg,
   onClose,
 }) {
+  const [img, setImg] = useState({
+    imgURL: null,
+    imgFile: null,
+  });
+  const { imgURL, imgFile } = img;
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
@@ -84,7 +91,12 @@ function ModalForm({
         alert('제목과 내용을 모두 작성해주세요.');
         return;
       }
-      writeDiary({ date, title, text });
+      const formdata = new FormData();
+      formdata.append('date', date);
+      formdata.append('title', title);
+      formdata.append('text', text);
+      if (imgFile) formdata.append('file', imgFile);
+      writeDiary(formdata);
     } else if (modalType === 'post') {
       deleteDiary(diaryId);
     }
@@ -94,10 +106,15 @@ function ModalForm({
     <Form onSubmit={onSubmit}>
       <ModalBody>
         {modalType === 'post' && (
-          <ModalPost title={diaryTitle} text={diaryText} />
+          <ModalPost title={diaryTitle} text={diaryText} img={diaryImg} />
         )}
         {modalType === 'write' && (
-          <ModalWrite diary={diary} onChange={onChange} />
+          <ModalWrite
+            diary={diary}
+            onChange={onChange}
+            img={img}
+            setImg={setImg}
+          />
         )}
       </ModalBody>
       <ModalFooter>

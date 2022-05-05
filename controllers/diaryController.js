@@ -21,10 +21,15 @@ module.exports = {
     const { date, title, text } = req.body;
     const user_id = req.decoded.id;
     try {
-      await Diary.create({ date, title, text, user_id });
+      if (req.file) {
+        const imgurl = req.file.path;
+        await Diary.create({ date, title, imgurl, text, user_id });
+      } else {
+        await Diary.create({ date, title, text, user_id });
+      }
       res.json({
         success: true,
-        code: 201,
+        status: 201,
         message: '일기가 성공적으로 작성되었습니다.',
       });
     } catch (err) {

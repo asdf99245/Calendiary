@@ -54,7 +54,8 @@ function CalendarDay({ idx, day, currentDate, diaries, onClick }) {
         'post',
         filtered[0].text,
         filtered[0].title,
-        filtered[0].id
+        filtered[0].id,
+        filtered[0].imgurl
       );
     } else {
       onClick(date, 'write');
