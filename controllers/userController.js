@@ -1,5 +1,5 @@
 const { User } = require('../database/models');
-const { Op, CITEXT } = require('sequelize');
+const { Op } = require('sequelize');
 const {
   verifyToken,
   makeAccessToken,
@@ -45,7 +45,7 @@ module.exports = {
       if (!result) {
         res.json({
           success: false,
-          code: 404,
+          status: 404,
           message: '존재하지 않는 계정입니다.',
         });
       } else {
@@ -59,7 +59,7 @@ module.exports = {
           });
           res.json({
             success: true,
-            code: 200,
+            status: 200,
             message: '로그인에 성공하였습니다.',
             accessToken,
             user_id,
@@ -68,7 +68,7 @@ module.exports = {
         } else {
           res.json({
             success: false,
-            code: 401,
+            status: 401,
             message: '비밀번호가 일치하지 않습니다.',
           });
         }
@@ -82,7 +82,7 @@ module.exports = {
     res.clearCookie('refreshToken');
     res.json({
       success: true,
-      code: 200,
+      status: 200,
       message: '로그아웃에 성공하였습니다.',
     });
   },
@@ -93,7 +93,7 @@ module.exports = {
       if (result) {
         res.json({
           success: false,
-          code: 409,
+          status: 409,
           message: '이미 존재하는 아이디입니다.',
         });
       } else {
@@ -101,7 +101,7 @@ module.exports = {
         await User.create({ user_id, user_password: encrypted, user_name });
         res.json({
           success: true,
-          code: 201,
+          status: 201,
           message: '회원가입이 성공적으로 완료되었습니다.',
         });
       }
