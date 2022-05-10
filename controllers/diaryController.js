@@ -1,6 +1,7 @@
 const { Diary } = require('../database/models');
 const { Op } = require('sequelize');
 const db = require('../database/models');
+const fs = require('fs');
 
 module.exports = {
   diaries: async (req, res) => {
@@ -40,6 +41,19 @@ module.exports = {
     const id = req.params.id;
     const user_id = req.decoded.id;
     try {
+      const results = await Diary.findOne({
+        attributes: ['imgurl'],
+        where: {
+          id,
+          user_id,
+        },
+      });
+      const imgurl = results.imgurl;
+      if (fs.existsSync(imgurl)) {
+        fs.unlinkSync(imgurl);
+        console.log('Image deleted');
+      }
+
       await Diary.destroy({ where: { id, user_id } });
       res.json({
         success: true,
