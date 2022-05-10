@@ -58,7 +58,6 @@ function CalendarTemplate() {
   const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
   const [days, setDays] = useState([]);
-  const [diaries, setDiaries] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,7 +65,7 @@ function CalendarTemplate() {
   }, [currentDate]);
 
   const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date, type, text = '', title, id = null, imgurl) => {
+  const onClickDay = (date, type, text, title, id, imgurl) => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');
       navigate('/login');
@@ -77,9 +76,6 @@ function CalendarTemplate() {
   };
 
   const { isLoading, data, error } = useQuery('diaries', getDiaries, {
-    onSuccess: (res) => {
-      setDiaries(res.data);
-    },
     onError: (err) => {
       console.log(err);
     },
@@ -101,7 +97,6 @@ function CalendarTemplate() {
             idx={i}
             day={d}
             currentDate={currentDate}
-            diaries={diaries}
             onClick={onClickDay}
           />
         ))}

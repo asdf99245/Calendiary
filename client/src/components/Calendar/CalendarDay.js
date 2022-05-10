@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { useQueryClient } from 'react-query';
 
 const Day = styled.div`
   height: 100px;
@@ -42,7 +43,12 @@ const Day = styled.div`
     `}
 `;
 
-function CalendarDay({ idx, day, currentDate, diaries, onClick }) {
+function CalendarDay({ idx, day, currentDate, onClick }) {
+  const queryClient = useQueryClient();
+  const diaries = queryClient.getQueryData('diaries')
+    ? queryClient.getQueryData('diaries').data
+    : [];
+
   const onClickDay = () => {
     const filtered = diaries.filter((diary) =>
       day.isSame(dayjs(diary.date), 'day')
