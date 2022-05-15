@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalClose } from '../../modules/modal';
 import { MdClose } from 'react-icons/md';
 import ModalForm from './ModalForm';
+import ModalPost from './ModalPost';
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -73,15 +74,23 @@ function ModalTemplate() {
           {modalDate}
           <ButtonClose onClick={onClose} />
         </ModalHeader>
-        <ModalForm
-          date={modalDate}
-          modalType={modalType}
-          diaryTitle={diaryTitle}
-          diaryText={diaryText}
-          diaryId={diaryId}
-          diaryImg={diaryImg}
-          onClose={onClose}
-        />
+        {modalType === 'post' ? (
+          <ModalPost
+            id={diaryId}
+            title={diaryTitle}
+            text={diaryText}
+            image={diaryImg}
+          />
+        ) : (
+          <ModalForm
+            date={modalDate}
+            modalType={modalType}
+            diaryTitle={diaryTitle}
+            diaryText={diaryText}
+            diaryId={diaryId}
+            diaryImg={diaryImg}
+          />
+        )}
       </ModalWrapper>
     </>
   );
