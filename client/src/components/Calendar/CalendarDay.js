@@ -37,7 +37,8 @@ const Day = styled.div`
   ${(props) =>
     props.isDiary &&
     css`
-      background: ${({ theme }) => theme.colors.gray_3};
+      color: White;
+      background: ${({ theme }) => theme.colors.blue_2};
       ${({ theme }) => theme.common.boxShadow_2};
       border-radius: ${({ theme }) => theme.borderRadius.base};
     `}
