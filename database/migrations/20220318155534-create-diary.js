@@ -2,25 +2,22 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Diaries', {
-      id: {
+      diary_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      date: {
+      diary_date: {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE,
       },
-      title: {
+      diary_title: {
         type: Sequelize.STRING,
       },
-      text: {
+      diary_text: {
         type: Sequelize.STRING(10000),
-      },
-      imgurl: {
-        type: Sequelize.STRING(200),
       },
       user_id: {
         allowNull: false,

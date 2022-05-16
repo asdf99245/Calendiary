@@ -4,10 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       this.hasMany(models.Diary, {
-        as: 'diaries',
         foreignKey: 'user_id',
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+        sourceKey: 'user_id',
       });
     }
   }

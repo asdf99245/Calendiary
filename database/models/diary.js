@@ -4,19 +4,24 @@ module.exports = (sequelize, DataTypes) => {
   class Diary extends Model {
     static associate(models) {
       this.belongsTo(models.User, {
-        as: 'users',
         foreignKey: 'user_id',
+        targetKey: 'user_id',
         onUpdate: 'cascade',
         onDelete: 'cascade',
+      });
+
+      this.hasMany(models.Diary_attach, {
+        foreignKey: 'diary_id',
+        sourceKey: 'diary_id',
       });
     }
   }
   Diary.init(
     {
-      date: DataTypes.DATE,
-      title: DataTypes.STRING,
-      text: DataTypes.STRING(10000),
-      imgurl: DataTypes.STRING(200),
+      diary_id: { type: DataTypes.INTEGER, primaryKey: true },
+      diary_date: DataTypes.DATE,
+      diary_title: DataTypes.STRING,
+      diary_text: DataTypes.STRING(10000),
     },
     {
       sequelize,
