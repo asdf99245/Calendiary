@@ -52,17 +52,18 @@ function CalendarDay({ idx, day, currentDate, onClick }) {
 
   const onClickDay = () => {
     const filtered = diaries.filter((diary) =>
-      day.isSame(dayjs(diary.date), 'day')
+      day.isSame(dayjs(diary.diary_date), 'day')
     );
     const date = day.format('YYYY-MM-DD');
     if (filtered.length > 0) {
+      const diary = filtered[0];
       onClick(
         date,
         'post',
-        filtered[0].text,
-        filtered[0].title,
-        filtered[0].id,
-        filtered[0].imgurl
+        diary.diary_text,
+        diary.diary_title,
+        diary.diary_id,
+        diary.Diary_attaches.length > 0 && diary.Diary_attaches[0].file_path
       );
     } else {
       onClick(date, 'write');
@@ -72,7 +73,7 @@ function CalendarDay({ idx, day, currentDate, onClick }) {
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}
       isToday={day.isSame(dayjs(), 'day')}
-      isDiary={diaries.some((a) => day.isSame(dayjs(a.date), 'day'))}
+      isDiary={diaries.some((a) => day.isSame(dayjs(a.diary_date), 'day'))}
       idx={idx}
       onClick={onClickDay}
     >
