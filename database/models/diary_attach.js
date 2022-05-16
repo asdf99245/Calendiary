@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       file_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
       },
       file_name: DataTypes.STRING,
       file_origin_name: DataTypes.STRING,

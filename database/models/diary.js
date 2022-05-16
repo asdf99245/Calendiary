@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Diary.init(
     {
-      diary_id: { type: DataTypes.INTEGER, primaryKey: true },
+      diary_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       diary_date: DataTypes.DATE,
       diary_title: DataTypes.STRING,
       diary_text: DataTypes.STRING(10000),
