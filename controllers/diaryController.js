@@ -88,8 +88,20 @@ module.exports = {
     const user_id = req.decoded.id;
     try {
       await Diary.update(data, {
-        where: { id, user_id },
+        where: { diary_id: id, user_id },
       });
+
+      if (req.file) {
+        const { originalname, filename, path, size } = req.file;
+        await Diary_attach.destroy({ where: { diary_id: id } });
+        await Diary_attach.create({
+          file_name: filename,
+          file_origin_name: originalname,
+          file_path: path,
+          file_size: size,
+          diary_id: id,
+        });
+      }
       res.json({
         success: true,
         status: 201,

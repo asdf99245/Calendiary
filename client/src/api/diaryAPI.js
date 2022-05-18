@@ -13,4 +13,8 @@ module.exports = {
     const response = await axios.delete(`/api/calendar/diary/${id}`);
     return response;
   },
+  onUpdate: async ({ id, infos }) => {
+    const response = await axios.post(`/api/calendar/diary/${id}`, infos);
+    return response;
+  },
 };

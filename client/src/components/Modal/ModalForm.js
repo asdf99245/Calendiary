@@ -53,6 +53,15 @@ function ModalForm({
       console.log(err);
     },
   });
+  const { mutate: updateDiary } = useMutation((data) => onUpdate(data), {
+    onSuccess: (res) => {
+      if (res.data.success) {
+        alert(res.data.message);
+        queryClient.invalidateQueries('diaries');
+        dispatch(modalClose());
+      }
+    },
+  });
 
   const [diary, setDiary] = useState({
     title: '',
@@ -67,6 +76,22 @@ function ModalForm({
     });
   };
 
+  useEffect(() => {
+    if (modalType === 'update') {
+      setDiary({
+        ...diary,
+        title: diaryTitle,
+        text: diaryText,
+      });
+      if (diaryImg) {
+        setImg({
+          ...img,
+          imgURL: `http://localhost:5000/${diaryImg}`,
+        });
+      }
+    }
+  }, [modalType]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!title.trim() || !text.trim()) {
@@ -77,11 +102,18 @@ function ModalForm({
     if (modalType === 'write') {
       // 글 쓰기
       const formdata = new FormData();
-      formdata.append('date', date);
-      formdata.append('title', title);
-      formdata.append('text', text);
+      formdata.append('diary_date', date);
+      formdata.append('diary_title', title);
+      formdata.append('diary_text', text);
       if (imgFile) formdata.append('file', imgFile);
       writeDiary(formdata);
+    } else {
+      // 글 수정
+      const formdata = new FormData();
+      if (title !== diaryTitle) formdata.append('diary_title', title);
+      if (text !== diaryText) formdata.append('diary_text', text);
+      if (imgFile) formdata.append('file', imgFile);
+      updateDiary({ id: diaryId, infos: formdata });
     }
   };
 
