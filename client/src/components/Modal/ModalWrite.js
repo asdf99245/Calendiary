@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
+import { MdOutlineAddPhotoAlternate, MdClose } from 'react-icons/md';
 
 const TextArea = styled.textarea`
   width: 100%;
@@ -13,7 +13,7 @@ const TextArea = styled.textarea`
 `;
 
 const Label = styled.label`
-  display: block;
+  display: inline-block;
   padding: ${({ theme }) => theme.spaces.base} 0px;
   font-size: ${({ theme }) => theme.fontSizes.base};
   font-weight: bold;
@@ -36,10 +36,8 @@ const Upload = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   border: 2px dashed ${({ theme }) => theme.colors.gray_2};
   border-radius: ${({ theme }) => theme.borderRadius.base};
-  height: 200px;
   font-size: 34px;
   color: ${({ theme }) => theme.colors.gray_2};
   cursor: pointer;
@@ -52,10 +50,37 @@ const Upload = styled.div`
   }
 `;
 
+const PreviewBox = styled.div`
+  width: 50%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background: ${({ theme }) => theme.colors.gray_3};
+  border-radius: 4px;
+  position: relative;
+  padding: 10px;
+`;
+
 const Preview = styled.img`
-  object-fit: cover;
-  width: auto;
-  height: 100%;
+  display: block;
+  max-width: 100%;
+  height: auto;
+`;
+
+const FileDelete = styled(MdClose)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.blue_2};
+  color: white;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 function ModalWrite({ diary, onChange, img, setImg }) {
@@ -77,6 +102,15 @@ function ModalWrite({ diary, onChange, img, setImg }) {
         imgFile: file,
       });
     }
+  };
+
+  const onClickDelete = (e) => {
+    e.stopPropagation();
+    setImg({
+      ...img,
+      imgURL: null,
+      imgFile: null,
+    });
   };
 
   return (
@@ -107,8 +141,14 @@ function ModalWrite({ diary, onChange, img, setImg }) {
         onChange={onChangeUpload}
       />
       <Upload onClick={onClickUpload}>
-        <MdOutlineAddPhotoAlternate />
-        {imgURL && <Preview src={imgURL} />}
+        {imgURL ? (
+          <PreviewBox>
+            <Preview src={imgURL} />
+            <FileDelete onClick={onClickDelete} />
+          </PreviewBox>
+        ) : (
+          <MdOutlineAddPhotoAlternate />
+        )}
       </Upload>
     </>
   );

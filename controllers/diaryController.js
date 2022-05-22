@@ -83,13 +83,20 @@ module.exports = {
     }
   },
   update: async (req, res) => {
-    const data = req.body;
+    const { diary_title, diary_text, isDeleteImg } = req.body;
     const id = req.params.id;
     const user_id = req.decoded.id;
     try {
-      await Diary.update(data, {
-        where: { diary_id: id, user_id },
-      });
+      await Diary.update(
+        { diary_title, diary_text },
+        {
+          where: { diary_id: id, user_id },
+        }
+      );
+      console.log(isDeleteImg);
+      if (isDeleteImg) {
+        await Diary_attach.destroy({ where: { diary_id: id } });
+      }
 
       if (req.file) {
         const { originalname, filename, path, size } = req.file;

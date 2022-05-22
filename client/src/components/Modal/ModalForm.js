@@ -110,8 +110,9 @@ function ModalForm({
     } else {
       // 글 수정
       const formdata = new FormData();
-      if (title !== diaryTitle) formdata.append('diary_title', title);
-      if (text !== diaryText) formdata.append('diary_text', text);
+      formdata.append('diary_title', title);
+      formdata.append('diary_text', text);
+      if (!imgURL) formdata.append('isDeleteImg', true);
       if (imgFile) formdata.append('file', imgFile);
       updateDiary({ id: diaryId, infos: formdata });
     }
