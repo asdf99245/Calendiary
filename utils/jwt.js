@@ -18,7 +18,7 @@ module.exports = {
         },
         process.env.JWT_SECRET_KEY,
         {
-          expiresIn: '2h',
+          expiresIn: '1h',
         }
       );
     } catch (err) {
