@@ -17,18 +17,42 @@ import { userLogin } from './modules/user';
 function App() {
   const dispatch = useDispatch();
   const modalOpen = useSelector((state) => state.modal.open);
+  const isLogin = useSelector((state) => state.user.isLogin);
   const queryClient = useQueryClient();
 
-  const { isLoading, data, error } = useQuery('user', silentRefresh, {
+  // 새로고침 시 silent refresh
+  useQuery('user', silentRefresh, {
+    retry: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
     onSuccess: (res) => {
       const { accessToken, user_id, user_name } = res.data;
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       dispatch(userLogin({ user_id, user_name }));
       queryClient.invalidateQueries('diaries');
     },
-    retry: false,
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  // 로그인 상태에서 자동으로 token 갱신
+  useQuery('user', silentRefresh, {
+    refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
+    enabled: !!isLogin, // 로그인 상태일때만 갱신
+    refetchInterval: 60 * 60 * 1000 - 60000,
+    refetchIntervalInBackground: true,
+    onSuccess: (res) => {
+      const { accessToken, user_id, user_name } = res.data;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      dispatch(userLogin({ user_id, user_name }));
+      queryClient.invalidateQueries('diaries');
+    },
+    onError: (err) => {
+      console.log(err);
+    },
   });
 
   return (
