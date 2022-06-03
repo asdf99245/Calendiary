@@ -43,7 +43,7 @@ function Header() {
   const queryClient = useQueryClient();
   const { mutate: logout } = useMutation(() => onLogout(), {
     onSuccess: (res) => {
-      console.log(res.data.message);
+      alert(res.data.message);
       axios.defaults.headers.common['Authorization'] = '';
       queryClient.invalidateQueries('diaries');
     },

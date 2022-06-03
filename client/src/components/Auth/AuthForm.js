@@ -49,7 +49,7 @@ function AuthForm({ type }) {
           'Authorization'
         ] = `Bearer ${accessToken}`;
         dispatch(userLogin({ user_id, user_name }));
-        console.log(message);
+        alert(message);
         navigate('/');
       } else {
         alert(res.data.message);
