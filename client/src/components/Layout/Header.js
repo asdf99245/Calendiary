@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { userLogout } from '../../modules/user';
 import { onLogout } from '../../api/authAPI';
 import axios from 'axios';
+import logo from '../../assets/logo.png';
 
 const Container = styled.header`
   height: 140px;
@@ -18,6 +19,11 @@ const Container = styled.header`
     letter-spacing: 8px;
     font-weight: 400;
     cursor: pointer;
+    background-image: url(${logo});
+    background-repeat: no-repeat;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
   }
 `;
 
