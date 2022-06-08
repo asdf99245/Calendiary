@@ -13,6 +13,8 @@ import getDates from '../../utils/getDates';
 import Button from './../common/Button';
 
 const CalendarWrapper = styled.div`
+  max-width: 1000px;
+  width: 100%;
   position: relative;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -22,10 +24,23 @@ const CalendarWrapper = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background-color: ${({ theme }) => theme.colors.gray_1};
   ${({ theme }) => theme.common.boxShadow};
+
+  ${({ theme }) => theme.laptop`
+     max-width: 800px;
+  `};
+
+  ${({ theme }) => theme.tablet`
+     max-width: 550px;
+     padding: ${({ theme }) => theme.spaces.lg};
+  `};
+
+  ${({ theme }) => theme.mobile`
+     max-width: 350px;
+     font-size:  ${({ theme }) => theme.fontSizes.xs};
+  `};
 `;
 
 const CalendarHeader = styled.div`
-  width: 130px;
   ${({ theme }) => theme.common.flexCenter};
   ${({ theme }) => theme.common.boxShadow_2};
   font-weight: 700;
@@ -50,6 +65,12 @@ const ButtonToday = styled(Button)`
   right: 40px;
   padding: ${({ theme }) => theme.spaces.small}
     ${({ theme }) => theme.spaces.lg};
+
+  ${({ theme }) => theme.mobile`
+    right:50%;
+    transform:translateX(50%);
+    font-size:  ${({ theme }) => theme.fontSizes.xs};
+  `};
 `;
 
 function CalendarTemplate() {

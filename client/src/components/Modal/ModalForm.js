@@ -15,15 +15,39 @@ const Form = styled.form`
 const ModalBody = styled.div`
   flex: 1;
   padding: ${({ theme }) => theme.spaces.xl};
-  min-height: 500px;
   max-height: 560px;
   overflow-y: scroll;
+
+  ${({ theme }) => theme.tablet`
+     padding: ${({ theme }) => theme.spaces.lg};
+     max-height: 450px;
+  `};
+
+  ${({ theme }) => theme.mobile`
+     padding:${({ theme }) => theme.spaces.base};
+     max-height: 350px;
+
+     label,input,textarea {
+      font-size: ${({ theme }) => theme.fontSizes.xs};
+     }
+
+     textarea {
+       height:200px;
+     }
+  `};
 `;
 
 const ModalFooter = styled.div`
   display: flex;
   height: 50px;
   width: 100%;
+
+  ${({ theme }) => theme.mobile`
+     height:40px;
+     button {
+       font-size: ${({ theme }) => theme.fontSizes.xs};
+      }
+  `};
 `;
 
 function ModalForm({

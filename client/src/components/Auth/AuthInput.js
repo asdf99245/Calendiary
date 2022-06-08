@@ -14,6 +14,14 @@ const Input = styled.input`
   &:focus {
     border-bottom: 2px solid ${({ theme }) => theme.colors.blue_2};
   }
+
+  ${({ theme }) => theme.mobile`
+     font-size:${({ theme }) => theme.fontSizes.xs};
+
+     & + & {
+       margin-top: ${({ theme }) => theme.spaces.xs};
+     }
+  `};
 `;
 
 function AuthInput({ ...props }) {

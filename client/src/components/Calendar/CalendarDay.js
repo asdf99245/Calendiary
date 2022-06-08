@@ -37,11 +37,25 @@ const Day = styled.div`
   ${(props) =>
     props.isDiary &&
     css`
-      color: White;
+      color: white;
       background: ${({ theme }) => theme.colors.blue_2};
       ${({ theme }) => theme.common.boxShadow_2};
       border-radius: ${({ theme }) => theme.borderRadius.base};
-    `}
+    `} 
+
+  ${({ theme }) => theme.laptop`
+     height: 80px;
+  `};
+
+  ${({ theme }) => theme.tablet`
+     justify-content:center;
+     align-items:center;
+     height: 60px;
+  `};
+
+  ${({ theme }) => theme.mobile`
+     height: 35px;
+  `};
 `;
 
 function CalendarDay({ idx, day, currentDate, onClick }) {

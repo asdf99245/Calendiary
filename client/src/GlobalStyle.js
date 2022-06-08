@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'MaruBuri-Regular';
   }
+
+  html,body {
+    height:100vh;
+  }
   
   *{
     letter-spacing: 1px;

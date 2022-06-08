@@ -19,6 +19,10 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background-color: ${({ theme }) => theme.colors.gray_1};
   ${({ theme }) => theme.common.boxShadow};
+
+  ${({ theme }) => theme.mobile`
+     width: 300px;
+  `};
 `;
 
 const Date = styled.div`
@@ -28,6 +32,10 @@ const Date = styled.div`
   span {
     font-size: ${({ theme }) => theme.fontSizes.xl};
     letter-spacing: ${({ theme }) => theme.spaces.small};
+
+    ${({ theme }) => theme.mobile`
+      font-size: ${({ theme }) => theme.fontSizes.lg};
+   `};
   }
 `;
 

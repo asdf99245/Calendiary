@@ -28,12 +28,38 @@ const ModalBody = styled.div`
   min-height: 500px;
   max-height: 560px;
   overflow-y: scroll;
+
+  ${({ theme }) => theme.tablet`
+     padding: ${({ theme }) => theme.spaces.lg};
+     min-height: 400px
+     max-height: 450px;
+  `};
+
+  ${({ theme }) => theme.mobile`
+     padding:${({ theme }) => theme.spaces.base};
+     min-height: 300px;
+     max-height: 350px;
+
+     h1 {
+      font-size: ${({ theme }) => theme.fontSizes.base};
+     }
+     div {
+      font-size: ${({ theme }) => theme.fontSizes.small};
+     }
+  `};
 `;
 
 const ModalFooter = styled.div`
   display: flex;
   height: 50px;
   width: 100%;
+
+  ${({ theme }) => theme.mobile`
+     height:40px;
+     button {
+       font-size: ${({ theme }) => theme.fontSizes.xs};
+      }
+  `};
 `;
 
 function ModalPost({ id, title, text, image }) {

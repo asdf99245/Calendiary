@@ -8,6 +8,10 @@ const Container = styled.footer`
   border-top: 1px solid ${({ theme }) => theme.colors.gray_3};
   color: ${({ theme }) => theme.colors.gray_2};
   font-size: ${({ theme }) => theme.fontSizes.small};
+
+  ${({ theme }) => theme.mobile`
+     font-size:  ${({ theme }) => theme.fontSizes.xs};
+  `};
 `;
 
 function Footer() {

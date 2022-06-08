@@ -30,6 +30,15 @@ const ModalWrapper = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.base};
   ${({ theme }) => theme.common.boxShadow_3};
   overflow: hidden;
+
+  ${({ theme }) => theme.tablet`
+      width:520px;
+  `};
+
+  ${({ theme }) => theme.mobile`
+      max-width:400px;
+      width:100%;
+  `};
 `;
 
 const ModalHeader = styled.div`
@@ -42,6 +51,11 @@ const ModalHeader = styled.div`
   align-items: center;
   font-size: ${({ theme }) => theme.fontSizes.xl};
   padding: ${({ theme }) => theme.spaces.xl};
+
+  ${({ theme }) => theme.mobile`
+     padding: ${({ theme }) => theme.spaces.lg};
+     font-size: ${({ theme }) => theme.fontSizes.base};
+  `};
 `;
 
 const ButtonClose = styled(MdClose)`

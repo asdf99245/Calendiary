@@ -8,6 +8,7 @@ import { userLogout } from '../../modules/user';
 import { onLogout } from '../../api/authAPI';
 import axios from 'axios';
 import logo from '../../assets/logo.png';
+import logo_sm from '../../assets/logo_sm.png';
 
 const Container = styled.header`
   height: 140px;
@@ -15,22 +16,28 @@ const Container = styled.header`
   position: relative;
 
   h1 {
-    font-size: ${({ theme }) => theme.fontSizes.logo};
-    letter-spacing: 8px;
-    font-weight: 400;
+    margin: 0;
     cursor: pointer;
+    width: 350px;
+    height: 80px;
     background-image: url(${logo});
     background-repeat: no-repeat;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
+
+    ${({ theme }) => theme.mobile`
+     background-image: url(${logo_sm});
+     width:200px;
+     height:50px;
+    `};
   }
 `;
 
 const Avatar = styled.div`
   position: absolute;
   top: 10px;
-  right: 20px;
+  right: 10px;
   width: 55px;
   height: 55px;
   background: white;
@@ -38,8 +45,14 @@ const Avatar = styled.div`
   border-radius: 50%;
   ${({ theme }) => theme.common.boxShadow}
   ${({ theme }) => theme.common.flexCenter}
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   white-space: nowrap;
+
+  ${({ theme }) => theme.mobile`
+      font-size: ${({ theme }) => theme.fontSizes.base};
+      width:40px;
+      height:40px;
+    `};
 `;
 
 function Header() {

@@ -14,6 +14,13 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding: ${({ theme }) => theme.spaces.lg};
+
+  ${({ theme }) => theme.mobile`
+     padding: ${({ theme }) => theme.spaces.base};
+     button {
+       font-size:${({ theme }) => theme.fontSizes.xs};
+     }
+  `};
 `;
 
 const ButtonStyled = styled(Button)`

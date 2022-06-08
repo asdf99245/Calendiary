@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthForm from './AuthForm';
 
 const Template = styled.div`
-  width: 500px;
+  width: 450px;
   ${({ theme }) => theme.common.flexCenterColumn};
   ${({ theme }) => theme.common.boxShadow};
   padding: ${({ theme }) => theme.spaces.lg};
@@ -14,10 +14,19 @@ const Template = styled.div`
     font-weight: 400;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
   }
+
+  ${({ theme }) => theme.mobile`
+     max-width: 300px;
+     padding: ${({ theme }) => theme.spaces.base};
+
+    h1 {
+      font-size:${({ theme }) => theme.fontSizes.lg};
+    }
+  `};
 `;
 
 const Navigate = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.small};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.blue_1};

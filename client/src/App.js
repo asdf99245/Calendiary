@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
+import media from './media';
 import GlobalStyle from './GlobalStyle';
 import Layout from './components/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
@@ -56,7 +57,7 @@ function App() {
   });
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={{ ...theme, ...media }}>
       <GlobalStyle />
       <Layout>
         <Routes>
