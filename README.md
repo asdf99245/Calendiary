@@ -1,8 +1,8 @@
 # 개인 프로젝트 - Calendiary
 
 일기를 기록할 수 있는 달력. CRUD 구현.  
-프론트엔드: React Framework 사용. Redux 사용하여 전역 상태 관리.
-백엔드: node.js 사용 , 데이터베이스 : MYSQL
+프론트엔드: React 사용, Redux 사용하여 전역 상태 관리.
+백엔드: node.js 사용, 데이터베이스 : MYSQL
 
 ## 기능
 
