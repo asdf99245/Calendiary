@@ -127,4 +127,4 @@ function CalendarTemplate() {
   );
 }
 
-export default CalendarTemplate;
+export default React.memo(CalendarTemplate);

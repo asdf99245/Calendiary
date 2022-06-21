@@ -17,7 +17,6 @@ import { userLogin } from './modules/user';
 
 function App() {
   const dispatch = useDispatch();
-  const modalOpen = useSelector((state) => state.modal.open);
   const isLogin = useSelector((state) => state.user.isLogin);
   const queryClient = useQueryClient();
 
@@ -65,7 +64,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-        {modalOpen && <ModalTemplate />}
       </Layout>
     </ThemeProvider>
   );
