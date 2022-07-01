@@ -64,7 +64,8 @@ function Header() {
     onSuccess: (res) => {
       alert(res.data.message);
       axios.defaults.headers.common['Authorization'] = '';
-      queryClient.invalidateQueries('diaries');
+      queryClient.clear();
+      dispatch(userLogout());
     },
   });
 
@@ -77,7 +78,6 @@ function Header() {
   };
   const onClickLogout = () => {
     logout();
-    dispatch(userLogout());
   };
 
   return (
