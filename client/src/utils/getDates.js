@@ -17,6 +17,8 @@ function getDates(date) {
     start = start.add(1, 'd');
   }
 
+  dates[0] = dates[0].startOf('date'); // 첫 날짜의 초기 시간으로 set
+  dates[41] = dates[41].endOf('date'); // 마지막 날짜의 끝 시간으로 set
   return dates;
 }
 

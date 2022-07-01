@@ -58,10 +58,11 @@ const Day = styled.div`
   `};
 `;
 
-function CalendarDay({ idx, day, currentDate, onClick }) {
+function CalendarDay({ idx, day, currentDate, onClick, duration }) {
   const queryClient = useQueryClient();
-  const diaries = queryClient.getQueryData('diaries')
-    ? queryClient.getQueryData('diaries').data
+  const { from, to } = duration;
+  const diaries = queryClient.getQueryData(['diaries', { from, to }])
+    ? queryClient.getQueryData(['diaries', { from, to }]).data
     : [];
 
   const onClickDay = () => {
@@ -83,6 +84,7 @@ function CalendarDay({ idx, day, currentDate, onClick }) {
       onClick(date, 'write');
     }
   };
+
   return (
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}

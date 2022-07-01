@@ -6,6 +6,7 @@ const fs = require('fs');
 module.exports = {
   diaries: async (req, res) => {
     const user_id = req.decoded.id;
+    const { from, to } = req.query;
     try {
       const results = await Diary.findAll({
         include: {
@@ -15,6 +16,9 @@ module.exports = {
         attributes: ['diary_id', 'diary_date', 'diary_title', 'diary_text'],
         where: {
           user_id,
+          diary_date: {
+            [Op.between]: [from, to],
+          },
         },
       });
 

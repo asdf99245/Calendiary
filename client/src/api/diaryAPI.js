@@ -5,8 +5,16 @@ export const onWrite = async (infos) => {
   return response;
 };
 
-export const getDiaries = async () => {
-  const response = await axios.get('/api/calendar/diaries');
+export const getDiaries = async (payload) => {
+  const { from, to } = payload;
+  if (from === null) return [];
+
+  const response = await axios.get('/api/calendar/diaries', {
+    params: {
+      from: from.toDate(),
+      to: to.toDate(),
+    },
+  });
   return response;
 };
 

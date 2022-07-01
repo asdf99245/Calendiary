@@ -78,12 +78,26 @@ function CalendarTemplate() {
   const currentDate = useSelector((state) => state.date.currentDate);
   const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
-  const [days, setDays] = useState([]);
   const navigate = useNavigate();
+  const [days, setDays] = useState([]);
+  const [duration, setDuration] = useState({
+    from: null,
+    to: null,
+  });
 
   useEffect(() => {
     setDays(getDates(currentDate));
   }, [currentDate]);
+
+  useEffect(() => {
+    if (days.length > 0) {
+      setDuration({
+        ...duration,
+        from: days[0],
+        to: days[days.length - 1],
+      });
+    }
+  }, [days]);
 
   const onClickToday = () => dispatch(setToday());
   const onClickDay = (date, type, text, title, id, imgurl) => {
@@ -96,12 +110,19 @@ function CalendarTemplate() {
     }
   };
 
-  const { isLoading, data, error } = useQuery('diaries', getDiaries, {
-    onError: (err) => {
-      console.log(err);
-    },
-    retry: false,
-  });
+  const { isLoading, data, error } = useQuery(
+    ['diaries', duration],
+    ({ queryKey }) => getDiaries(queryKey[1]),
+    {
+      onSuccess: (res) => {},
+      onError: (err) => {
+        console.log(err);
+      },
+      retry: false,
+      staleTime: 1000 * 60,
+      enabled: !!isLogin,
+    }
+  );
 
   return (
     <>
@@ -119,6 +140,7 @@ function CalendarTemplate() {
             day={d}
             currentDate={currentDate}
             onClick={onClickDay}
+            duration={duration}
           />
         ))}
         <ButtonToday onClick={onClickToday}>TODAY</ButtonToday>
