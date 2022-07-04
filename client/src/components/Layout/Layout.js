@@ -10,6 +10,7 @@ const Container = styled.div`
 
 const Main = styled.main`
   min-height: calc(100vh - 240px);
+  margin: 0px 10px;
 `;
 
 function Layout({ children }) {

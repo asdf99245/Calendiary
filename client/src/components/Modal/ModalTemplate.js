@@ -36,7 +36,7 @@ const ModalWrapper = styled.div`
   `};
 
   ${({ theme }) => theme.mobile`
-      max-width:400px;
+      max-width:350px;
       width:100%;
   `};
 `;
