@@ -5,7 +5,7 @@ const fs = require('fs');
 
 module.exports = {
   diaries: async (req, res) => {
-    const user_id = req.decoded.id;
+    const diary_writer = req.decoded.id;
     const { from, to } = req.query;
     try {
       const results = await Diary.findAll({
@@ -15,7 +15,7 @@ module.exports = {
         },
         attributes: ['diary_id', 'diary_date', 'diary_title', 'diary_text'],
         where: {
-          user_id,
+          diary_writer,
           diary_date: {
             [Op.between]: [from, to],
           },
@@ -29,13 +29,13 @@ module.exports = {
   },
   diary: async (req, res) => {
     const { diary_date, diary_title, diary_text } = req.body;
-    const user_id = req.decoded.id;
+    const diary_writer = req.decoded.id;
     try {
       const result = await Diary.create({
         diary_date,
         diary_title,
         diary_text,
-        user_id,
+        diary_writer,
       });
       const diary_id = result.diary_id;
       if (req.file) {
@@ -60,7 +60,7 @@ module.exports = {
   },
   delete: async (req, res) => {
     const id = req.params.id;
-    const user_id = req.decoded.id;
+    const diary_writer = req.decoded.id;
     try {
       const results = await Diary_attach.findOne({
         attributes: ['file_path'],
@@ -76,7 +76,7 @@ module.exports = {
         }
       }
 
-      await Diary.destroy({ where: { diary_id: id, user_id } });
+      await Diary.destroy({ where: { diary_id: id, diary_writer } });
       res.json({
         success: true,
         status: 200,
@@ -89,15 +89,15 @@ module.exports = {
   update: async (req, res) => {
     const { diary_title, diary_text, isDeleteImg } = req.body;
     const id = req.params.id;
-    const user_id = req.decoded.id;
+    const diary_writer = req.decoded.id;
     try {
       await Diary.update(
         { diary_title, diary_text },
         {
-          where: { diary_id: id, user_id },
+          where: { diary_id: id, diary_writer },
         }
       );
-      console.log(isDeleteImg);
+
       if (isDeleteImg) {
         await Diary_attach.destroy({ where: { diary_id: id } });
       }

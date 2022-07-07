@@ -3,25 +3,26 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Diaries', {
       diary_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
       },
       diary_date: {
+        type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        type: Sequelize.DATE,
       },
       diary_title: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       diary_text: {
-        type: Sequelize.STRING(10000),
+        type: Sequelize.TEXT('long'),
       },
-      user_id: {
-        allowNull: false,
+      diary_writer: {
         type: Sequelize.STRING(50),
+        allowNull: false,
         references: {
           model: 'users',
           key: 'user_id',
@@ -29,11 +30,11 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade',
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

@@ -18,15 +18,30 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      file_name: DataTypes.STRING,
-      file_origin_name: DataTypes.STRING,
-      file_path: DataTypes.STRING,
-      file_size: DataTypes.INTEGER,
+      file_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      file_origin_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      file_path: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      file_size: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,
       timestamps: false,
       modelName: 'Diary_attach',
+      tableName: 'diary_attaches',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
     }
   );
   return Diary_attach;

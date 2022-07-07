@@ -4,12 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   class Diary extends Model {
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: 'user_id',
+        foreignKey: 'diary_writer',
         targetKey: 'user_id',
         onUpdate: 'cascade',
         onDelete: 'cascade',
       });
-
       this.hasMany(models.Diary_attach, {
         foreignKey: 'diary_id',
         sourceKey: 'diary_id',
@@ -24,13 +23,23 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      diary_date: DataTypes.DATE,
-      diary_title: DataTypes.STRING,
-      diary_text: DataTypes.STRING(10000),
+      diary_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      diary_title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      diary_text: DataTypes.TEXT('long'),
     },
     {
       sequelize,
+      underscored: true,
       modelName: 'Diary',
+      tableName: 'diaries',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
     }
   );
   return Diary;
