@@ -15,33 +15,7 @@
 
 ## 테이블 구조(ERD)
 
-![erd2](https://user-images.githubusercontent.com/39851220/168536880-5a599a3e-db54-429b-b015-b38deb75645b.PNG)
-
-USERS 테이블
-
-- user_id (Primary key) 유저아이디
-- user_password 유저비밀번호
-- user_name 유저이름
-- createdAt 생성시간
-- updatedAt 변경시간
-
-DIARIES 테이블
-
-- diary_id (Primary key) 일기 아이디
-- diary_title 일기 제목
-- diary_date 일기 날짜
-- diary_text 일기 내용
-- createdAt 생성시간
-- updatedAt 변경시간
-- user_id (Foreign key: user_id(USERS)) 일기 작성 유저 아이디
-
-DIARY_ATTACHES 테이블
-
-- file_id (Primary key) 파일 아이디
-- file_name 파일 이름
-- file_origin_name 파일 원본 이름
-- file_path 파일 경로
-- diary_id 첨부된 일기 아이디
+![Calendiary_erd](https://user-images.githubusercontent.com/39851220/177911929-7c712425-1699-479a-828e-2a890c645c1a.png)
 
 ## 커밋 컨벤션을 지켜보자
 
