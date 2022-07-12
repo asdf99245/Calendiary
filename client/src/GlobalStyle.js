@@ -2,15 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'MaruBuri-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-  }
+}
 
   *,html,body {
     box-sizing: border-box;
-    font-family: 'MaruBuri-Regular';
+    font-family: 'BMJUA';
   }
 
   html,body {
