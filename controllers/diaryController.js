@@ -1,7 +1,7 @@
 const { Diary, Diary_attach } = require('../database/models');
 const { Op } = require('sequelize');
-const db = require('../database/models');
 const fs = require('fs');
+const s3 = require('../utils/s3');
 
 module.exports = {
   diaries: async (req, res) => {
@@ -39,14 +39,25 @@ module.exports = {
       });
       const diary_id = result.diary_id;
       if (req.file) {
-        const { originalname, filename, path, size } = req.file;
-        await Diary_attach.create({
-          file_name: filename,
-          file_origin_name: originalname,
-          file_path: path,
-          file_size: size,
-          diary_id,
-        });
+        if (process.env.NODE_ENV === 'development') {
+          const { originalname, filename, path, size } = req.file;
+          await Diary_attach.create({
+            file_name: filename,
+            file_origin_name: originalname,
+            file_path: `http://localhost:5000/${path}`,
+            file_size: size,
+            diary_id,
+          });
+        } else if (process.env.NODE_ENV === 'production') {
+          const { originalname, key, location, size } = req.file;
+          await Diary_attach.create({
+            file_name: key,
+            file_origin_name: originalname,
+            file_path: location,
+            file_size: size,
+            diary_id,
+          });
+        }
       }
 
       res.json({
@@ -63,16 +74,29 @@ module.exports = {
     const diary_writer = req.decoded.id;
     try {
       const results = await Diary_attach.findOne({
-        attributes: ['file_path'],
+        attributes: ['file_path', 'file_name'],
         where: {
           diary_id: id,
         },
       });
       if (results) {
-        const path = results.file_path;
-        if (fs.existsSync(path)) {
-          fs.unlinkSync(path);
-          console.log('Image deleted');
+        if (process.env.NODE_ENV === 'development') {
+          const path = results.file_path.split('http://localhost:5000/')[1];
+          if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+            console.log('Image deleted');
+          }
+        } else if (process.env.NODE_ENV === 'production') {
+          s3.deleteObject(
+            {
+              Bucket: process.env.AWS_BUCKET_NAME,
+              Key: results.file_name,
+            },
+            function (err, data) {
+              if (err) throw err;
+              else console.log(data);
+            }
+          );
         }
       }
 
@@ -99,19 +123,83 @@ module.exports = {
       );
 
       if (isDeleteImg) {
-        await Diary_attach.destroy({ where: { diary_id: id } });
+        const results = await Diary_attach.findOne({
+          attributes: ['file_path', 'file_name'],
+          where: {
+            diary_id: id,
+          },
+        });
+        if (results) {
+          if (process.env.NODE_ENV === 'development') {
+            const path = results.file_path.split('http://localhost:5000/')[1];
+            if (fs.existsSync(path)) {
+              fs.unlinkSync(path);
+              console.log('Image deleted');
+            }
+          } else if (process.env.NODE_ENV === 'production') {
+            s3.deleteObject(
+              {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: results.file_name,
+              },
+              function (err, data) {
+                if (err) throw err;
+                else console.log(data);
+              }
+            );
+          }
+          await Diary_attach.destroy({ where: { diary_id: id } });
+        }
       }
 
       if (req.file) {
-        const { originalname, filename, path, size } = req.file;
-        await Diary_attach.destroy({ where: { diary_id: id } });
-        await Diary_attach.create({
-          file_name: filename,
-          file_origin_name: originalname,
-          file_path: path,
-          file_size: size,
-          diary_id: id,
+        const results = await Diary_attach.findOne({
+          attributes: ['file_path', 'file_name'],
+          where: {
+            diary_id: id,
+          },
         });
+        if (results) {
+          if (process.env.NODE_ENV === 'development') {
+            const path = results.file_path.split('http://localhost:5000/')[1];
+            if (fs.existsSync(path)) {
+              fs.unlinkSync(path);
+              console.log('Image deleted');
+            }
+          } else if (process.env.NODE_ENV === 'production') {
+            s3.deleteObject(
+              {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: results.file_name,
+              },
+              function (err, data) {
+                if (err) throw err;
+                else console.log(data);
+              }
+            );
+          }
+          await Diary_attach.destroy({ where: { diary_id: id } });
+        }
+
+        if (process.env.NODE_ENV === 'development') {
+          const { originalname, filename, path, size } = req.file;
+          await Diary_attach.create({
+            file_name: filename,
+            file_origin_name: originalname,
+            file_path: `http://localhost:5000/${path}`,
+            file_size: size,
+            diary_id: id,
+          });
+        } else if (process.env.NODE_ENV === 'production') {
+          const { originalname, key, location, size } = req.file;
+          await Diary_attach.create({
+            file_name: key,
+            file_origin_name: originalname,
+            file_path: location,
+            file_size: size,
+            diary_id: id,
+          });
+        }
       }
       res.json({
         success: true,
