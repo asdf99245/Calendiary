@@ -86,7 +86,7 @@ function ModalPost({ id, title, text, image }) {
       <ModalBody>
         <Title>{title}</Title>
         <Contents>{text}</Contents>
-        {image && <Image src={`http://localhost:5000/${image}`} alt="테스트" />}
+        {image && <Image src={image} alt="테스트" />}
       </ModalBody>
       <ModalFooter>
         <ModalButton onClick={switchToUpdateMode}>수정</ModalButton>

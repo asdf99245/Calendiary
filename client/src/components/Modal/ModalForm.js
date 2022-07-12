@@ -110,7 +110,7 @@ function ModalForm({
       if (diaryImg) {
         setImg({
           ...img,
-          imgURL: `http://localhost:5000/${diaryImg}`,
+          imgURL: diaryImg,
         });
       }
     }
