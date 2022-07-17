@@ -44,7 +44,7 @@ const ModalWrapper = styled.div`
 const ModalHeader = styled.div`
   position: relative;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.blue_2};
+  background-color: ${({ theme }) => theme.colors.base};
   color: white;
   display: flex;
   justify-content: center;

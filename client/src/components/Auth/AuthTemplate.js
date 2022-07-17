@@ -6,7 +6,6 @@ import AuthForm from './AuthForm';
 const Template = styled.div`
   width: 450px;
   ${({ theme }) => theme.common.flexCenterColumn};
-  ${({ theme }) => theme.common.boxShadow};
   padding: ${({ theme }) => theme.spaces.lg};
   border-radius: ${({ theme }) => theme.borderRadius.base};
   h1 {

@@ -26,7 +26,8 @@ const Form = styled.form`
 const FormInput = styled.input`
   border: none;
   outline: none;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.gray_3};
+  border: 2px solid ${({ theme }) => theme.colors.gray_3};
+  border-radius: 8px;
   padding: ${({ theme }) => theme.spaces.base};
 
   & + & {
@@ -34,7 +35,7 @@ const FormInput = styled.input`
   }
 
   &:focus {
-    border-bottom: 2px solid ${({ theme }) => theme.colors.blue_2};
+    border: 2px solid ${({ theme }) => theme.colors.blue_2};
   }
 
   ${({ theme }) => theme.mobile`

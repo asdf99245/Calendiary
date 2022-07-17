@@ -5,7 +5,7 @@ const ButtonTemplate = styled.button`
   outline: none;
   border: none;
   background: ${(props) =>
-    props.background ? props.background : props.theme.colors.blue_2};
+    props.background ? props.background : props.theme.colors.base};
   color: white;
   border-radius: ${({ theme }) => theme.borderRadius.base};
   padding: ${({ theme }) => theme.spaces.base};
