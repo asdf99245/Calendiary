@@ -6,10 +6,11 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 `;
 
 const Main = styled.main`
-  min-height: calc(100vh - 240px);
+  flex-grow: 1;
   margin: 0px 10px;
 `;
 

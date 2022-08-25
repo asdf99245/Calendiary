@@ -11,7 +11,7 @@ import logo from '../../assets/logo.png';
 import logo_sm from '../../assets/logo_sm.png';
 
 const Container = styled.header`
-  height: 140px;
+  flex-basis: 140px;
   ${({ theme }) => theme.common.flexCenter};
   position: relative;
 

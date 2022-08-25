@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html,body {
-    height:100vh;
+    height:100%;
   }
   
   *{
@@ -34,6 +34,8 @@ const GlobalStyle = createGlobalStyle`
     color:${({ theme }) => theme.colors.base};
     padding:0;
     margin:0;
+    display:flex;
+    flex-direction:column;
   }
 `;
 
