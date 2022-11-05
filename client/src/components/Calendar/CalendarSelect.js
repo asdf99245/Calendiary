@@ -45,6 +45,10 @@ const List = styled.ul`
   overflow-y: scroll;
   height: 100px;
   border: 1px solid ${({ theme }) => theme.colors.gray_3};
+
+  & + & {
+    margin-left: 5px;
+  }
 `;
 
 const ListItem = styled.li`
