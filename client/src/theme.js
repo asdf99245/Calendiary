@@ -44,6 +44,7 @@ const common = {
   flexCenterColumn: `
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
   `,
   boxShadow: `

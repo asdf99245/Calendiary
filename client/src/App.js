@@ -8,12 +8,12 @@ import { Route, Routes } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ModalTemplate from './components/Modal/ModalTemplate';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useQueryClient } from 'react-query';
 import { silentRefresh } from './api/authAPI';
 import axios from 'axios';
 import { userLogin } from './modules/user';
+import NotFound from './pages/NotFound';
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +63,7 @@ function App() {
           <Route path="/" element={<Calendar />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Layout>
     </ThemeProvider>
