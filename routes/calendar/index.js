@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../../controllers/diaryController');
+const controller = require('../../controllers/diary.controller');
 const { authCheck } = require('../../middlewares/authCheck');
 const upload = require('../../middlewares/multerUpload');
 
