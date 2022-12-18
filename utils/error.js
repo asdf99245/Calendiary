@@ -7,32 +7,40 @@ class CustomError extends Error {
   }
 }
 
-export class BadRequestError extends CustomError {
+class BadRequestError extends CustomError {
   constructor(message) {
     super(STATUS_CODE.BAD_REQUEST, message);
   }
 }
 
-export class UnauthorizedError extends CustomError {
+class UnauthorizedError extends CustomError {
   constructor(message) {
     super(STATUS_CODE.UNAUTHORIZED, message);
   }
 }
 
-export class NotFoundError extends CustomError {
+class NotFoundError extends CustomError {
   constructor(message) {
     super(STATUS_CODE.NOT_FOUND, message);
   }
 }
 
-export class ConflictError extends CustomError {
+class ConflictError extends CustomError {
   constructor(message) {
     super(STATUS_CODE.CONFLICT, message);
   }
 }
 
-export class InternalServerError extends CustomError {
+class InternalServerError extends CustomError {
   constructor(message) {
     super(STATUS_CODE.INTERNAL_SERVER_ERROR, message);
   }
 }
+
+module.exports = {
+  BadRequestError,
+  UnauthorizedError,
+  NotFoundError,
+  ConflictError,
+  InternalServerError,
+};
