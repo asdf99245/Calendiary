@@ -3,7 +3,7 @@ const diaryAttachService = require('../services/diary_attach.service');
 const STATUS_CODE = require('../utils/statusCode');
 
 module.exports = {
-  diaries: async (req, res, next) => {
+  getDiaries: async (req, res, next) => {
     const user = req.decoded.id;
     const { from, to } = req.query;
     try {
@@ -13,7 +13,7 @@ module.exports = {
       next(err);
     }
   },
-  diary: async (req, res, next) => {
+  writeDiary: async (req, res, next) => {
     const { diary_date, diary_title, diary_text } = req.body;
     const diary_writer = req.decoded.id;
     try {
@@ -34,7 +34,7 @@ module.exports = {
       next(err);
     }
   },
-  delete: async (req, res, next) => {
+  deleteDiary: async (req, res, next) => {
     const id = req.params.id;
     const diary_writer = req.decoded.id;
     try {
@@ -50,7 +50,7 @@ module.exports = {
       next(err);
     }
   },
-  update: async (req, res, next) => {
+  updateDiary: async (req, res, next) => {
     const { diary_title, diary_text, isDeleteImg } = req.body;
     const id = req.params.id;
     const diary_writer = req.decoded.id;

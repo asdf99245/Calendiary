@@ -5,9 +5,9 @@ const { authCheck } = require('../../middlewares/authCheck');
 const upload = require('../../middlewares/multerUpload');
 
 router.use(authCheck);
-router.get('/diaries', controller.diaries);
-router.post('/diary', upload.single('file'), controller.diary);
-router.delete('/diary/:id', controller.delete);
-router.post('/diary/:id', upload.single('file'), controller.update);
+router.get('/', controller.getDiaries);
+router.post('/', upload.single('file'), controller.writeDiary);
+router.delete('/:id', controller.deleteDiary);
+router.post('/:id', upload.single('file'), controller.updateDiary);
 
 module.exports = router;
