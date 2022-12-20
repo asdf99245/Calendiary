@@ -9,11 +9,8 @@ module.exports = {
 
     return diary;
   },
-  deleteDiary: async function (diary_id, diary_writer) {
-    await diaryRepository.deleteOneByFilter({
-      diary_id,
-      diary_writer,
-    });
+  deleteDiary: async function (filter) {
+    await diaryRepository.deleteOneByFilter(filter);
   },
   updateDiary: async function (value, filter) {
     await diaryRepository.updateOneByFilter(value, filter);
