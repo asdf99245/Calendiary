@@ -68,7 +68,10 @@ module.exports = {
       }
 
       if (req.file) {
-        await diaryAttachService.deleteImage(id, req.file);
+        const file = await diaryAttachService.findOneByDiaryId(id);
+        if (file) {
+          await diaryAttachService.deleteImage(id, file);
+        }
         await diaryAttachService.uploadImage(id, req.file);
       }
       res.status(STATUS_CODE.CREATED).json({
