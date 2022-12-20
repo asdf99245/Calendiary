@@ -70,35 +70,26 @@ function AuthForm({ type }) {
 
   const { mutate: signUp } = useMutation((infos) => onRegister(infos), {
     onSuccess: (res) => {
-      if (res.data.success) {
-        alert(res.data.message);
-        navigate('/login');
-      } else {
-        alert(res.data.message);
-      }
+      alert(res.data.message);
+      navigate('/login');
     },
-    onError: (err) => console.log(err),
+    onError: (err) => console.error(err.message),
   });
 
   const { mutate: login } = useMutation((infos) => onLogin(infos), {
     onSuccess: (res) => {
-      if (res.data.success) {
-        const { accessToken, user_id, user_name, message } = res.data;
-        axios.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${accessToken}`;
-        dispatch(userLogin({ user_id, user_name }));
-        alert(message);
-        navigate('/');
-      } else {
-        alert(res.data.message);
-      }
+      const { accessToken, user_id, user_name, message } = res.data;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      dispatch(userLogin({ user_id, user_name }));
+      alert(message);
+      navigate('/');
     },
-    onError: (err) => console.log(err),
+    onError: (err) => console.error(err.message),
   });
 
   const onSubmit = (data) => {
     const { userId, userPassword, userName } = data;
+    console.log(data);
     if (type === '로그인') {
       login({
         user_id: userId,

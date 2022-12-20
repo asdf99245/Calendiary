@@ -6,8 +6,7 @@ module.exports = {
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
       return decoded;
     } catch (err) {
-      console.log(err);
-      return false;
+      throw err;
     }
   },
   makeAccessToken: (id) => {

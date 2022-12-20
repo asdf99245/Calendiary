@@ -1,11 +1,12 @@
 const express = require('express');
-const app = express();
-const port = process.env.PORT || 5000;
-const api = require('./routes/api');
-const { sequelize } = require('./database/models');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fs = require('fs');
+const api = require('./routes/api');
+const { sequelize } = require('./database/models');
+const STATUS_CODE = require('./utils/statusCode');
+const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(
   cors({
@@ -25,6 +26,16 @@ sequelize
 app.use('/uploads', express.static('./uploads'));
 
 app.use('/api', api);
+
+app.use((err, req, res, next) => {
+  console.error(err.message);
+
+  const statusCode = err.statusCode || STATUS_CODE.INTERNAL_SERVER_ERROR;
+
+  res.status(statusCode).json({
+    message: err.message,
+  });
+});
 
 app.listen(port, () => {
   const dir = './uploads';

@@ -67,23 +67,19 @@ function ModalForm({
   const queryClient = useQueryClient();
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
     onSuccess: (res) => {
-      if (res.data.success) {
-        alert(res.data.message);
-        queryClient.invalidateQueries('diaries');
-        dispatch(modalClose());
-      }
+      alert(res.data.message);
+      queryClient.invalidateQueries('diaries');
+      dispatch(modalClose());
     },
     onError: (err) => {
-      console.log(err);
+      console.error(err);
     },
   });
   const { mutate: updateDiary } = useMutation((data) => onUpdate(data), {
     onSuccess: (res) => {
-      if (res.data.success) {
-        alert(res.data.message);
-        queryClient.invalidateQueries('diaries');
-        dispatch(modalClose());
-      }
+      alert(res.data.message);
+      queryClient.invalidateQueries('diaries');
+      dispatch(modalClose());
     },
   });
 

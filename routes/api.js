@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const calendar = require('./calendar');
-const user = require('./user');
+const diary = require('./diary');
+const auth = require('./auth');
 
-router.use('/calendar', calendar);
-router.use('/user', user);
+router.use('/auth', auth);
+router.use('/diary', diary);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const { verifyToken } = require('../utils/jwt');
+const { UnauthorizedError } = require('../utils/error');
 
 exports.authCheck = (req, res, next) => {
   try {
@@ -8,9 +9,9 @@ exports.authCheck = (req, res, next) => {
       req.decoded = decoded;
       next();
     } else {
-      res.send([]);
+      throw new UnauthorizedError('Invalid Token');
     }
   } catch (err) {
-    res.status(401).send('Token expired');
+    next(err);
   }
 };
