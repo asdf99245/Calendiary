@@ -69,11 +69,9 @@ function ModalPost({ id, title, text, image }) {
 
   const { mutate: deleteDiary } = useMutation((id) => onDelete(id), {
     onSuccess: (res) => {
-      if (res.data.success) {
-        alert(res.data.message);
-        queryClient.invalidateQueries('diaries');
-        dispatch(modalClose());
-      }
+      alert(res.data.message);
+      queryClient.invalidateQueries('diaries');
+      dispatch(modalClose());
     },
   });
 
