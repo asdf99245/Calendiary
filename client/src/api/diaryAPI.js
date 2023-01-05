@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from './axiosInstance';
 
 export const onWrite = async (infos) => {
-  const response = await axios.post('/api/diary', infos);
+  const response = await axios.post('/diary', infos);
   return response;
 };
 
@@ -9,7 +9,7 @@ export const getDiaries = async (payload) => {
   const { from, to } = payload;
   if (from === null) return [];
 
-  const response = await axios.get('/api/diary', {
+  const response = await axios.get('/diary', {
     params: {
       from: from.toDate(),
       to: to.toDate(),
@@ -19,7 +19,7 @@ export const getDiaries = async (payload) => {
 };
 
 export const onDelete = async (id) => {
-  const response = await axios.delete(`/api/diary/${id}`);
+  const response = await axios.delete(`/diary/${id}`);
   return response;
 };
 
