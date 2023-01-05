@@ -10,12 +10,13 @@ module.exports = {
       const accessToken = makeAccessToken(id);
       const refreshToken = makeRefreshToken(id);
 
-      const { user_id, user_name } = userService.findOneByFilter({
+      const { user_id, user_name } = await userService.findOneByFilter({
         user_id: id,
       });
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
       });
+
       res.status(STATUS_CODE.OK).json({
         accessToken,
         user_id,
