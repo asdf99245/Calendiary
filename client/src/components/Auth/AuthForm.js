@@ -78,8 +78,7 @@ function AuthForm({ type }) {
 
   const { mutate: login } = useMutation((infos) => onLogin(infos), {
     onSuccess: (res) => {
-      const { accessToken, user_id, user_name, message } = res.data;
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      const { user_id, user_name, message } = res.data;
       dispatch(userLogin({ user_id, user_name }));
       alert(message);
       navigate('/');
