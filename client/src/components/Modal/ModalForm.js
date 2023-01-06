@@ -71,9 +71,6 @@ function ModalForm({
       queryClient.invalidateQueries('diaries');
       dispatch(modalClose());
     },
-    onError: (err) => {
-      console.error(err);
-    },
   });
   const { mutate: updateDiary } = useMutation((data) => onUpdate(data), {
     onSuccess: (res) => {

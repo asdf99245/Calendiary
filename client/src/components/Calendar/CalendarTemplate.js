@@ -110,19 +110,11 @@ function CalendarTemplate() {
     }
   };
 
-  const { isLoading, data, error } = useQuery(
-    ['diaries', duration],
-    ({ queryKey }) => getDiaries(queryKey[1]),
-    {
-      onSuccess: (res) => {},
-      onError: (err) => {
-        console.log(err);
-      },
-      retry: false,
-      staleTime: 1000 * 60,
-      enabled: !!isLogin,
-    }
-  );
+  useQuery(['diaries', duration], ({ queryKey }) => getDiaries(queryKey[1]), {
+    retry: false,
+    staleTime: 1000 * 60,
+    enabled: !!isLogin,
+  });
 
   return (
     <>

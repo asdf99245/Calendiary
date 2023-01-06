@@ -21,15 +21,10 @@ function App() {
   // 새로고침 시 silent refresh
   useQuery('user', silentRefresh, {
     retry: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
     onSuccess: (res) => {
       const { user_id, user_name } = res.data;
       dispatch(userLogin({ user_id, user_name }));
       queryClient.invalidateQueries('diaries');
-    },
-    onError: (err) => {
-      console.log(err);
     },
   });
 
