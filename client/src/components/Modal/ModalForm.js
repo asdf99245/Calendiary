@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { onUpdate, onWrite } from '../../api/diaryAPI';
 import ModalWrite from './ModalWrite';
 import ModalButton from './ModalButton';
+import QUERY_KEY from '../../libs/react-query/queryKey';
 
 const Form = styled.form`
   display: flex;
@@ -68,14 +69,14 @@ function ModalForm({
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
     onSuccess: (res) => {
       alert(res.data.message);
-      queryClient.invalidateQueries('diaries');
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
       dispatch(modalClose());
     },
   });
   const { mutate: updateDiary } = useMutation((data) => onUpdate(data), {
     onSuccess: (res) => {
       alert(res.data.message);
-      queryClient.invalidateQueries('diaries');
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
       dispatch(modalClose());
     },
   });

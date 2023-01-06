@@ -13,18 +13,19 @@ import { useQuery, useQueryClient } from 'react-query';
 import { silentRefresh } from './api/authAPI';
 import { userLogin } from './modules/user';
 import NotFound from './pages/NotFound';
+import QUERY_KEY from './libs/react-query/queryKey';
 
 function App() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   // 새로고침 시 silent refresh
-  useQuery('user', silentRefresh, {
+  useQuery([QUERY_KEY.USER], silentRefresh, {
     retry: false,
     onSuccess: (res) => {
       const { user_id, user_name } = res.data;
       dispatch(userLogin({ user_id, user_name }));
-      queryClient.invalidateQueries('diaries');
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
     },
   });
 

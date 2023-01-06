@@ -11,6 +11,7 @@ import CalendarDate from './CalendarDate';
 import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
 import Button from './../common/Button';
+import QUERY_KEY from './../../libs/react-query/queryKey';
 
 const CalendarWrapper = styled.div`
   max-width: 1000px;
@@ -110,11 +111,15 @@ function CalendarTemplate() {
     }
   };
 
-  useQuery(['diaries', duration], ({ queryKey }) => getDiaries(queryKey[1]), {
-    retry: false,
-    staleTime: 1000 * 60,
-    enabled: !!isLogin,
-  });
+  useQuery(
+    [QUERY_KEY.DIARIES, duration],
+    ({ queryKey }) => getDiaries(queryKey[1]),
+    {
+      retry: false,
+      staleTime: 1000 * 60,
+      enabled: !!isLogin,
+    }
+  );
 
   return (
     <>
