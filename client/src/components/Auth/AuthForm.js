@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import Button from '../common/Button';
 import { onLogin, onRegister } from '../../api/authAPI';
 import { userLogin } from './../../modules/user';
@@ -73,7 +72,6 @@ function AuthForm({ type }) {
       alert(res.data.message);
       navigate('/login');
     },
-    onError: (err) => console.error(err.message),
   });
 
   const { mutate: login } = useMutation((infos) => onLogin(infos), {
@@ -83,12 +81,10 @@ function AuthForm({ type }) {
       alert(message);
       navigate('/');
     },
-    onError: (err) => console.error(err.message),
   });
 
   const onSubmit = (data) => {
     const { userId, userPassword, userName } = data;
-    console.log(data);
     if (type === '로그인') {
       login({
         user_id: userId,

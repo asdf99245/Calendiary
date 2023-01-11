@@ -3,8 +3,9 @@ import styled, { useTheme } from 'styled-components';
 import ModalButton from './ModalButton';
 import { useDispatch } from 'react-redux';
 import { modalChangeType, modalClose } from '../../modules/modal';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onDelete } from '../../api/diaryAPI';
+import QUERY_KEY from './../../libs/react-query/queryKey';
 
 const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontSizes.lg};
@@ -70,7 +71,7 @@ function ModalPost({ id, title, text, image }) {
   const { mutate: deleteDiary } = useMutation((id) => onDelete(id), {
     onSuccess: (res) => {
       alert(res.data.message);
-      queryClient.invalidateQueries('diaries');
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
       dispatch(modalClose());
     },
   });

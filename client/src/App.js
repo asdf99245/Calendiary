@@ -9,27 +9,23 @@ import Calendar from './pages/Calendar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { useDispatch } from 'react-redux';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { silentRefresh } from './api/authAPI';
 import { userLogin } from './modules/user';
 import NotFound from './pages/NotFound';
+import QUERY_KEY from './libs/react-query/queryKey';
 
 function App() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   // 새로고침 시 silent refresh
-  useQuery('user', silentRefresh, {
+  useQuery([QUERY_KEY.USER], silentRefresh, {
     retry: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
     onSuccess: (res) => {
       const { user_id, user_name } = res.data;
       dispatch(userLogin({ user_id, user_name }));
-      queryClient.invalidateQueries('diaries');
-    },
-    onError: (err) => {
-      console.log(err);
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
     },
   });
 

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { modalClose } from '../../modules/modal';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onUpdate, onWrite } from '../../api/diaryAPI';
 import ModalWrite from './ModalWrite';
 import ModalButton from './ModalButton';
+import QUERY_KEY from '../../libs/react-query/queryKey';
 
 const Form = styled.form`
   display: flex;
@@ -68,17 +69,14 @@ function ModalForm({
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
     onSuccess: (res) => {
       alert(res.data.message);
-      queryClient.invalidateQueries('diaries');
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
       dispatch(modalClose());
-    },
-    onError: (err) => {
-      console.error(err);
     },
   });
   const { mutate: updateDiary } = useMutation((data) => onUpdate(data), {
     onSuccess: (res) => {
       alert(res.data.message);
-      queryClient.invalidateQueries('diaries');
+      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
       dispatch(modalClose());
     },
   });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { setToday } from '../../modules/date';
 import { modalOpen } from './../../modules/modal';
 import { setDiary } from '../../modules/diary';
@@ -11,6 +11,7 @@ import CalendarDate from './CalendarDate';
 import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
 import Button from './../common/Button';
+import QUERY_KEY from './../../libs/react-query/queryKey';
 
 const CalendarWrapper = styled.div`
   max-width: 1000px;
@@ -110,14 +111,10 @@ function CalendarTemplate() {
     }
   };
 
-  const { isLoading, data, error } = useQuery(
-    ['diaries', duration],
+  useQuery(
+    [QUERY_KEY.DIARIES, duration],
     ({ queryKey }) => getDiaries(queryKey[1]),
     {
-      onSuccess: (res) => {},
-      onError: (err) => {
-        console.log(err);
-      },
       retry: false,
       staleTime: 1000 * 60,
       enabled: !!isLogin,
