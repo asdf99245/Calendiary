@@ -4,7 +4,7 @@ const errorHandler = (error) => {
   const message =
     error instanceof Error ? error.message : 'error connecting to server';
 
-  alert(message);
+  console.error(message);
 };
 
 const queryClient = new QueryClient({
