@@ -8,6 +8,7 @@ import rootReducer from './modules/index';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { QueryClientProvider } from '@tanstack/react-query';
 import queryClient from './libs/react-query/queryClient';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -19,6 +20,7 @@ ReactDOM.render(
           <App />
         </BrowserRouter>
       </Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
