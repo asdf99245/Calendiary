@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import QUERY_KEY from './../../libs/react-query/queryKey';
 
 const Day = styled.div`

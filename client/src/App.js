@@ -9,7 +9,7 @@ import Calendar from './pages/Calendar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { useDispatch } from 'react-redux';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { silentRefresh } from './api/authAPI';
 import { userLogin } from './modules/user';
 import NotFound from './pages/NotFound';

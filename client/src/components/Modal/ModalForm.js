@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { modalClose } from '../../modules/modal';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onUpdate, onWrite } from '../../api/diaryAPI';
 import ModalWrite from './ModalWrite';
 import ModalButton from './ModalButton';

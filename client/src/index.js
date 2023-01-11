@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './modules/index';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import queryClient from './libs/react-query/queryClient';
 
 const store = createStore(rootReducer, composeWithDevTools());

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { setToday } from '../../modules/date';
 import { modalOpen } from './../../modules/modal';
 import { setDiary } from '../../modules/diary';

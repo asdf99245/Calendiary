@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components';
 import ModalButton from './ModalButton';
 import { useDispatch } from 'react-redux';
 import { modalChangeType, modalClose } from '../../modules/modal';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onDelete } from '../../api/diaryAPI';
 import QUERY_KEY from './../../libs/react-query/queryKey';
 

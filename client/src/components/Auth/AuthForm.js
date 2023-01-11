@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import Button from '../common/Button';
 import { onLogin, onRegister } from '../../api/authAPI';
 import { userLogin } from './../../modules/user';

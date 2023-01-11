@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MdLogin, MdLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userLogout } from '../../modules/user';
 import { onLogout } from '../../api/authAPI';
 import axios from 'axios';
