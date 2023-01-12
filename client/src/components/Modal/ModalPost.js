@@ -6,6 +6,7 @@ import { modalChangeType, modalClose } from '../../modules/modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onDelete } from '../../api/diaryAPI';
 import QUERY_KEY from './../../libs/react-query/queryKey';
+import { MODAL_TYPE } from '../../utils/constants';
 
 const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontSizes.lg};
@@ -77,7 +78,7 @@ function ModalPost({ id, title, text, image }) {
   });
 
   const switchToUpdateMode = () => {
-    dispatch(modalChangeType('update'));
+    dispatch(modalChangeType(MODAL_TYPE.UPDATE));
   };
 
   return (

@@ -86,13 +86,25 @@ function CalendarTemplate() {
     setDays(getDates(currentDate));
   }, [currentDate]);
 
-  const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date, type, text, title, id, imgurl) => {
+  const onClickToday = () => {
+    dispatch(setToday());
+  };
+
+  const onClickDay = (date, type, diary) => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');
       navigate('/login');
     } else {
-      dispatch(setDiary([id, title, text, imgurl]));
+      if (diary) {
+        const {
+          diary_id: id,
+          diary_title: title,
+          diary_text: text,
+          Diary_attaches: attaches,
+        } = diary;
+        const imgSrc = attaches.length > 0 && attaches[0].file_path;
+        dispatch(setDiary([id, title, text, imgSrc]));
+      }
       dispatch(modalOpen([date, type]));
     }
   };

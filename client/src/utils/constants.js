@@ -7,3 +7,9 @@ export const WEEK = Object.freeze([
   'FRI',
   'SAT',
 ]);
+
+export const MODAL_TYPE = Object.freeze({
+  READ: 'READ',
+  WRITE: 'WRITE',
+  UPDATE: 'UPDATE',
+});

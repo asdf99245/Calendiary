@@ -5,6 +5,7 @@ import { modalClose } from '../../modules/modal';
 import { MdClose } from 'react-icons/md';
 import ModalForm from './ModalForm';
 import ModalPost from './ModalPost';
+import { MODAL_TYPE } from '../../utils/constants';
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -88,7 +89,7 @@ function ModalTemplate() {
           {modalDate}
           <ButtonClose onClick={onClose} />
         </ModalHeader>
-        {modalType === 'post' ? (
+        {modalType === MODAL_TYPE.READ ? (
           <ModalPost
             id={diaryId}
             title={diaryTitle}

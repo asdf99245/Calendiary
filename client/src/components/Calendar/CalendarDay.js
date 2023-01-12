@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
+import { MODAL_TYPE } from '../../utils/constants';
 
 const Day = styled.div`
   height: 100px;
@@ -63,18 +64,12 @@ function CalendarDay({ idx, day, currentDate, diaries = [], onClick }) {
       day.isSame(dayjs(diary.diary_date), 'day')
     );
     const date = day.format('YYYY-MM-DD');
+
     if (filtered.length > 0) {
       const diary = filtered[0];
-      onClick(
-        date,
-        'post',
-        diary.diary_text,
-        diary.diary_title,
-        diary.diary_id,
-        diary.Diary_attaches.length > 0 && diary.Diary_attaches[0].file_path
-      );
+      onClick(date, MODAL_TYPE.READ, diary);
     } else {
-      onClick(date, 'write');
+      onClick(date, MODAL_TYPE.WRITE);
     }
   };
 
@@ -82,7 +77,9 @@ function CalendarDay({ idx, day, currentDate, diaries = [], onClick }) {
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}
       isToday={day.isSame(dayjs(), 'day')}
-      isDiary={diaries.some((a) => day.isSame(dayjs(a.diary_date), 'day'))}
+      isDiary={diaries.some((diary) =>
+        day.isSame(dayjs(diary.diary_date), 'day')
+      )}
       idx={idx}
       onClick={onClickDay}
     >
