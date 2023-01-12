@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import theme from './theme';
-import media from './media';
-import GlobalStyle from './GlobalStyle';
+import theme from './styles/theme';
+import GlobalStyle from './styles/GlobalStyle';
+import media from './styles/media';
 import Layout from './components/Layout/Layout';
 import Calendar from './pages/Calendar';
 import Login from './pages/Login';
