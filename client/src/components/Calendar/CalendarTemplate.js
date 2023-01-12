@@ -81,24 +81,10 @@ function CalendarTemplate() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [days, setDays] = useState([]);
-  const [duration, setDuration] = useState({
-    from: null,
-    to: null,
-  });
 
   useEffect(() => {
     setDays(getDates(currentDate));
   }, [currentDate]);
-
-  useEffect(() => {
-    if (days.length > 0) {
-      setDuration({
-        ...duration,
-        from: days[0],
-        to: days[days.length - 1],
-      });
-    }
-  }, [days]);
 
   const onClickToday = () => dispatch(setToday());
   const onClickDay = (date, type, text, title, id, imgurl) => {
@@ -111,8 +97,8 @@ function CalendarTemplate() {
     }
   };
 
-  useQuery(
-    [QUERY_KEY.DIARIES, duration],
+  const { data: diaries } = useQuery(
+    [QUERY_KEY.DIARIES, { from: days[0], to: days[days.length - 1] }],
     ({ queryKey }) => getDiaries(queryKey[1]),
     {
       retry: false,
@@ -130,14 +116,14 @@ function CalendarTemplate() {
             {w}
           </CalendarHeader>
         ))}
-        {days.map((d, i) => (
+        {days.map((day, i) => (
           <CalendarDay
-            key={i}
+            key={day}
             idx={i}
-            day={d}
+            day={day}
             currentDate={currentDate}
+            diaries={diaries}
             onClick={onClickDay}
-            duration={duration}
           />
         ))}
         <ButtonToday onClick={onClickToday}>TODAY</ButtonToday>

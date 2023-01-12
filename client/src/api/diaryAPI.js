@@ -7,15 +7,16 @@ export const onWrite = async (infos) => {
 
 export const getDiaries = async (payload) => {
   const { from, to } = payload;
-  if (from === null) return [];
+  if (!from || !to) return [];
 
-  const response = await axios.get('/diary', {
+  const { data } = await axios.get('/diary', {
     params: {
       from: from.toDate(),
       to: to.toDate(),
     },
   });
-  return response;
+
+  return data;
 };
 
 export const onDelete = async (id) => {

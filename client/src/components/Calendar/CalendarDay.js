@@ -1,8 +1,6 @@
-import dayjs from 'dayjs';
 import React from 'react';
+import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
-import { useQueryClient } from '@tanstack/react-query';
-import QUERY_KEY from './../../libs/react-query/queryKey';
 
 const Day = styled.div`
   height: 100px;
@@ -59,13 +57,7 @@ const Day = styled.div`
   `};
 `;
 
-function CalendarDay({ idx, day, currentDate, onClick, duration }) {
-  const queryClient = useQueryClient();
-  const { from, to } = duration;
-  const diaries = queryClient.getQueryData([QUERY_KEY.DIARIES, { from, to }])
-    ? queryClient.getQueryData([QUERY_KEY.DIARIES, { from, to }]).data
-    : [];
-
+function CalendarDay({ idx, day, currentDate, diaries = [], onClick }) {
   const onClickDay = () => {
     const filtered = diaries.filter((diary) =>
       day.isSame(dayjs(diary.diary_date), 'day')
