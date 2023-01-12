@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { modalChangeType, modalClose } from '../../modules/modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onDelete } from '../../api/diaryAPI';
-import QUERY_KEY from './../../libs/react-query/queryKey';
+import QUERY_KEY from '../../libs/react-query/queryKey';
 import { MODAL_TYPE } from '../../utils/constants';
 
 const Title = styled.h1`

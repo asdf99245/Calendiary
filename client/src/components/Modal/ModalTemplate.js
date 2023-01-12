@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalClose } from '../../modules/modal';
 import { MdClose } from 'react-icons/md';
 import ModalForm from './ModalForm';
-import ModalPost from './ModalPost';
+import ModalPost from './ModalRead';
 import { MODAL_TYPE } from '../../utils/constants';
 
 const ModalBackground = styled.div`
