@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { MODAL_TYPE } from '../../utils/constants';
 
 const Day = styled.div`
-  height: 100px;
+  aspect-ratio: 5 / 4;
   padding: ${({ theme }) => theme.spaces.small};
   font-weight: 700;
   cursor: pointer;
@@ -43,18 +43,10 @@ const Day = styled.div`
       border-radius: ${({ theme }) => theme.borderRadius.base};
     `} 
 
-  ${({ theme }) => theme.laptop`
-     height: 80px;
-  `};
-
   ${({ theme }) => theme.tablet`
      justify-content:center;
      align-items:center;
-     height: 60px;
-  `};
-
-  ${({ theme }) => theme.mobile`
-     height: 35px;
+     aspect-ratio: 1;
   `};
 `;
 
