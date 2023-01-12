@@ -12,6 +12,7 @@ import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
 import Button from './../common/Button';
 import QUERY_KEY from './../../libs/react-query/queryKey';
+import { WEEK } from '../../utils/constants';
 
 const CalendarWrapper = styled.div`
   max-width: 1000px;
@@ -75,7 +76,6 @@ const ButtonToday = styled(Button)`
 `;
 
 function CalendarTemplate() {
-  const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const currentDate = useSelector((state) => state.date.currentDate);
   const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
@@ -111,7 +111,7 @@ function CalendarTemplate() {
     <>
       <CalendarDate currentDate={currentDate} />
       <CalendarWrapper>
-        {week.map((w, i) => (
+        {WEEK.map((w, i) => (
           <CalendarHeader key={i} idx={i}>
             {w}
           </CalendarHeader>
