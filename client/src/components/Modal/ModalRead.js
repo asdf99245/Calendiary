@@ -64,7 +64,7 @@ const ModalFooter = styled.div`
   `};
 `;
 
-function ModalPost({ id, title, text, image }) {
+function ModalRead({ id, title, text, image }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -101,4 +101,4 @@ function ModalPost({ id, title, text, image }) {
   );
 }
 
-export default ModalPost;
+export default ModalRead;

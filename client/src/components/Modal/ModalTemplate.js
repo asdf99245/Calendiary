@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalClose } from '../../modules/modal';
 import { MdClose } from 'react-icons/md';
 import ModalForm from './ModalForm';
-import ModalPost from './ModalRead';
+import ModalRead from './ModalRead';
 import { MODAL_TYPE } from '../../utils/constants';
 
 const ModalBackground = styled.div`
@@ -90,7 +90,7 @@ function ModalTemplate() {
           <ButtonClose onClick={onClose} />
         </ModalHeader>
         {modalType === MODAL_TYPE.READ ? (
-          <ModalPost
+          <ModalRead
             id={diaryId}
             title={diaryTitle}
             text={diaryText}
