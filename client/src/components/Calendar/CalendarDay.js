@@ -1,11 +1,10 @@
-import dayjs from 'dayjs';
 import React from 'react';
+import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
-import { useQueryClient } from '@tanstack/react-query';
-import QUERY_KEY from './../../libs/react-query/queryKey';
+import { MODAL_TYPE } from '../../utils/constants';
 
 const Day = styled.div`
-  height: 100px;
+  aspect-ratio: 5 / 4;
   padding: ${({ theme }) => theme.spaces.small};
   font-weight: 700;
   cursor: pointer;
@@ -44,45 +43,25 @@ const Day = styled.div`
       border-radius: ${({ theme }) => theme.borderRadius.base};
     `} 
 
-  ${({ theme }) => theme.laptop`
-     height: 80px;
-  `};
-
   ${({ theme }) => theme.tablet`
      justify-content:center;
      align-items:center;
-     height: 60px;
-  `};
-
-  ${({ theme }) => theme.mobile`
-     height: 35px;
+     aspect-ratio: 1;
   `};
 `;
 
-function CalendarDay({ idx, day, currentDate, onClick, duration }) {
-  const queryClient = useQueryClient();
-  const { from, to } = duration;
-  const diaries = queryClient.getQueryData([QUERY_KEY.DIARIES, { from, to }])
-    ? queryClient.getQueryData([QUERY_KEY.DIARIES, { from, to }]).data
-    : [];
-
+function CalendarDay({ idx, day, currentDate, diaries = [], onClick }) {
   const onClickDay = () => {
     const filtered = diaries.filter((diary) =>
       day.isSame(dayjs(diary.diary_date), 'day')
     );
     const date = day.format('YYYY-MM-DD');
+
     if (filtered.length > 0) {
       const diary = filtered[0];
-      onClick(
-        date,
-        'post',
-        diary.diary_text,
-        diary.diary_title,
-        diary.diary_id,
-        diary.Diary_attaches.length > 0 && diary.Diary_attaches[0].file_path
-      );
+      onClick(date, MODAL_TYPE.READ, diary);
     } else {
-      onClick(date, 'write');
+      onClick(date, MODAL_TYPE.WRITE);
     }
   };
 
@@ -90,7 +69,9 @@ function CalendarDay({ idx, day, currentDate, onClick, duration }) {
     <Day
       isCurrentMonth={day.get('M') === currentDate.get('M')}
       isToday={day.isSame(dayjs(), 'day')}
-      isDiary={diaries.some((a) => day.isSame(dayjs(a.diary_date), 'day'))}
+      isDiary={diaries.some((diary) =>
+        day.isSame(dayjs(diary.diary_date), 'day')
+      )}
       idx={idx}
       onClick={onClickDay}
     >

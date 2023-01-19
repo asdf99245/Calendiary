@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { modalChangeType, modalClose } from '../../modules/modal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onDelete } from '../../api/diaryAPI';
-import QUERY_KEY from './../../libs/react-query/queryKey';
+import QUERY_KEY from '../../libs/react-query/queryKey';
+import { MODAL_TYPE } from '../../utils/constants';
 
 const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontSizes.lg};
@@ -63,7 +64,7 @@ const ModalFooter = styled.div`
   `};
 `;
 
-function ModalPost({ id, title, text, image }) {
+function ModalRead({ id, title, text, image }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -77,7 +78,7 @@ function ModalPost({ id, title, text, image }) {
   });
 
   const switchToUpdateMode = () => {
-    dispatch(modalChangeType('update'));
+    dispatch(modalChangeType(MODAL_TYPE.UPDATE));
   };
 
   return (
@@ -100,4 +101,4 @@ function ModalPost({ id, title, text, image }) {
   );
 }
 
-export default ModalPost;
+export default ModalRead;

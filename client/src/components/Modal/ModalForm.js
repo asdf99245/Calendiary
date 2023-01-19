@@ -7,6 +7,7 @@ import { onUpdate, onWrite } from '../../api/diaryAPI';
 import ModalWrite from './ModalWrite';
 import ModalButton from './ModalButton';
 import QUERY_KEY from '../../libs/react-query/queryKey';
+import { MODAL_TYPE } from '../../utils/constants';
 
 const Form = styled.form`
   display: flex;
@@ -95,7 +96,7 @@ function ModalForm({
   };
 
   useEffect(() => {
-    if (modalType === 'update') {
+    if (modalType === MODAL_TYPE.UPDATE) {
       setDiary({
         ...diary,
         title: diaryTitle,
@@ -117,7 +118,7 @@ function ModalForm({
       return;
     }
 
-    if (modalType === 'write') {
+    if (modalType === MODAL_TYPE.WRITE) {
       // 글 쓰기
       const formdata = new FormData();
       formdata.append('diary_date', date);

@@ -12,6 +12,7 @@ import CalendarDay from './CalendarDay';
 import getDates from '../../utils/getDates';
 import Button from './../common/Button';
 import QUERY_KEY from './../../libs/react-query/queryKey';
+import { WEEK } from '../../utils/constants';
 
 const CalendarWrapper = styled.div`
   max-width: 1000px;
@@ -75,44 +76,41 @@ const ButtonToday = styled(Button)`
 `;
 
 function CalendarTemplate() {
-  const week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const currentDate = useSelector((state) => state.date.currentDate);
   const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [days, setDays] = useState([]);
-  const [duration, setDuration] = useState({
-    from: null,
-    to: null,
-  });
 
   useEffect(() => {
     setDays(getDates(currentDate));
   }, [currentDate]);
 
-  useEffect(() => {
-    if (days.length > 0) {
-      setDuration({
-        ...duration,
-        from: days[0],
-        to: days[days.length - 1],
-      });
-    }
-  }, [days]);
+  const onClickToday = () => {
+    dispatch(setToday());
+  };
 
-  const onClickToday = () => dispatch(setToday());
-  const onClickDay = (date, type, text, title, id, imgurl) => {
+  const onClickDay = (date, type, diary) => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');
       navigate('/login');
     } else {
-      dispatch(setDiary([id, title, text, imgurl]));
+      if (diary) {
+        const {
+          diary_id: id,
+          diary_title: title,
+          diary_text: text,
+          Diary_attaches: attaches,
+        } = diary;
+        const imgSrc = attaches.length > 0 && attaches[0].file_path;
+        dispatch(setDiary([id, title, text, imgSrc]));
+      }
       dispatch(modalOpen([date, type]));
     }
   };
 
-  useQuery(
-    [QUERY_KEY.DIARIES, duration],
+  const { data: diaries } = useQuery(
+    [QUERY_KEY.DIARIES, { from: days[0], to: days[days.length - 1] }],
     ({ queryKey }) => getDiaries(queryKey[1]),
     {
       retry: false,
@@ -125,19 +123,19 @@ function CalendarTemplate() {
     <>
       <CalendarDate currentDate={currentDate} />
       <CalendarWrapper>
-        {week.map((w, i) => (
+        {WEEK.map((w, i) => (
           <CalendarHeader key={i} idx={i}>
             {w}
           </CalendarHeader>
         ))}
-        {days.map((d, i) => (
+        {days.map((day, i) => (
           <CalendarDay
-            key={i}
+            key={day}
             idx={i}
-            day={d}
+            day={day}
             currentDate={currentDate}
+            diaries={diaries}
             onClick={onClickDay}
-            duration={duration}
           />
         ))}
         <ButtonToday onClick={onClickToday}>TODAY</ButtonToday>

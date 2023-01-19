@@ -1,33 +1,19 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import theme from './theme';
-import media from './media';
-import GlobalStyle from './GlobalStyle';
-import Layout from './components/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
+import GlobalStyle from './styles/GlobalStyle';
+import media from './styles/media';
+import Layout from './components/Layout/Layout';
 import Calendar from './pages/Calendar';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import { useDispatch } from 'react-redux';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { silentRefresh } from './api/authAPI';
-import { userLogin } from './modules/user';
 import NotFound from './pages/NotFound';
-import QUERY_KEY from './libs/react-query/queryKey';
+import useUserRefresh from './hooks/useUserRefresh';
 
 function App() {
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-
   // 새로고침 시 silent refresh
-  useQuery([QUERY_KEY.USER], silentRefresh, {
-    retry: false,
-    onSuccess: (res) => {
-      const { user_id, user_name } = res.data;
-      dispatch(userLogin({ user_id, user_name }));
-      queryClient.invalidateQueries([QUERY_KEY.DIARIES]);
-    },
-  });
+  useUserRefresh();
 
   return (
     <ThemeProvider theme={{ ...theme, ...media }}>
