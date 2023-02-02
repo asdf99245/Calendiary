@@ -60,6 +60,7 @@ function ModalForm({
   diaryText,
   diaryImg,
 }) {
+  const [images, setImages] = useState([]);
   const [img, setImg] = useState({
     imgURL: null,
     imgFile: null,
@@ -67,6 +68,7 @@ function ModalForm({
   const { imgURL, imgFile } = img;
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
     onSuccess: (res) => {
       alert(res.data.message);
@@ -87,8 +89,10 @@ function ModalForm({
     text: '',
   });
   const { title, text } = diary;
+
   const onChange = (e) => {
     const { id, value } = e.target;
+
     setDiary({
       ...diary,
       [id]: value,
@@ -142,9 +146,9 @@ function ModalForm({
       <ModalBody>
         <ModalWrite
           diary={diary}
+          images={images}
+          setImages={setImages}
           onChange={onChange}
-          img={img}
-          setImg={setImg}
         />
       </ModalBody>
       <ModalFooter>

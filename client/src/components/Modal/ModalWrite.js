@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { MdOutlineAddPhotoAlternate, MdClose } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 
 const TextArea = styled.textarea`
   width: 100%;
@@ -33,9 +33,10 @@ const FileInput = styled.input`
 
 const Upload = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 10px;
   border: 2px dashed ${({ theme }) => theme.colors.gray_2};
   border-radius: ${({ theme }) => theme.borderRadius.base};
   font-size: 34px;
@@ -51,20 +52,18 @@ const Upload = styled.div`
 `;
 
 const PreviewBox = styled.div`
-  width: 50%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
   background: ${({ theme }) => theme.colors.gray_3};
   border-radius: 4px;
+  width: 100px;
+  height: 100px;
   position: relative;
   padding: 10px;
 `;
 
 const Preview = styled.img`
-  display: block;
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
 `;
 
 const FileDelete = styled(MdClose)`
@@ -83,34 +82,47 @@ const FileDelete = styled(MdClose)`
   }
 `;
 
-function ModalWrite({ diary, onChange, img, setImg }) {
+function ModalWrite({ diary, images, setImages, onChange }) {
+  const [blobURLs, setBlobURLs] = useState([]);
+  const inputRef = useRef(null);
+
   const { title, text } = diary;
-  const imgInput = useRef();
-  const { imgURL, imgFile } = img;
+
+  useEffect(() => {
+    setBlobURLs(
+      images.map((image) => {
+        return { id: image.id, url: URL.createObjectURL(image) };
+      })
+    );
+
+    return () => {
+      blobURLs.forEach((item) => URL.revokeObjectURL(item.url));
+    };
+  }, [images]);
 
   const onClickUpload = () => {
-    imgInput.current.click();
+    inputRef.current?.click();
   };
 
-  const onChangeUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImg({
-        ...img,
-        imgURL: url,
-        imgFile: file,
-      });
+  const onImageUpload = (e) => {
+    const target = e.target;
+    if (target.files) {
+      if (target.files.length > 4) {
+        alert('파일은 최대 4개까지 등록할 수 있습니다.');
+        return;
+      }
+
+      setImages([...target.files]);
     }
   };
 
-  const onClickDelete = (e) => {
+  const onClickDelete = (e, url) => {
     e.stopPropagation();
-    setImg({
-      ...img,
-      imgURL: null,
-      imgFile: null,
-    });
+    const idx = blobURLs.findIndex((item) => item.url === url);
+    URL.revokeObjectURL(url);
+
+    setBlobURLs(blobURLs.filter((_, i) => i !== url));
+    setImages(images.filter((_, i) => i !== idx));
   };
 
   return (
@@ -132,23 +144,22 @@ function ModalWrite({ diary, onChange, img, setImg }) {
         value={text}
         onChange={onChange}
       />
-      <Label htmlFor="img">사진 업로드(1개만 가능함)</Label>
+      <Label htmlFor="img">사진 업로드</Label>
       <FileInput
-        ref={imgInput}
+        ref={inputRef}
         type="file"
         id="img"
-        accept="image/png, image/jpeg"
-        onChange={onChangeUpload}
+        accept="image/*"
+        multiple
+        onChange={onImageUpload}
       />
       <Upload onClick={onClickUpload}>
-        {imgURL ? (
-          <PreviewBox>
-            <Preview src={imgURL} />
-            <FileDelete onClick={onClickDelete} />
+        {blobURLs.map((blobURL) => (
+          <PreviewBox key={blobURL.id}>
+            <Preview src={blobURL.url} />
+            <FileDelete onClick={(e) => onClickDelete(e, blobURL.url)} />
           </PreviewBox>
-        ) : (
-          <MdOutlineAddPhotoAlternate />
-        )}
+        ))}
       </Upload>
     </>
   );
