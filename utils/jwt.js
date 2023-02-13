@@ -21,7 +21,7 @@ module.exports = {
         },
         process.env.JWT_SECRET_KEY,
         {
-          expiresIn: '30s',
+          expiresIn: '30m',
         }
       );
     } catch (err) {
