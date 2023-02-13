@@ -16,6 +16,7 @@ module.exports = {
   writeDiary: async (req, res, next) => {
     const { diary_date, diary_title, diary_text } = req.body;
     const diary_writer = req.decoded.id;
+    const files = req.files;
     try {
       const diary = await diaryService.createDiary({
         diary_date,
@@ -24,9 +25,7 @@ module.exports = {
         diary_writer,
       });
       const diary_id = diary.diary_id;
-      if (req.file) {
-        await diaryAttachService.uploadImage(diary_id, req.file);
-      }
+      if (files) await diaryAttachService.uploadImages(diary_id, files);
       res.status(STATUS_CODE.CREATED).json({
         message: '일기가 성공적으로 작성되었습니다.',
       });

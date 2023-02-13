@@ -6,8 +6,8 @@ const upload = require('../../middlewares/multerUpload');
 
 router.use(authCheck);
 router.get('/', controller.getDiaries);
-router.post('/', upload.single('file'), controller.writeDiary);
+router.post('/', upload.array('files'), controller.writeDiary);
 router.delete('/:id', controller.deleteDiary);
-router.post('/:id', upload.single('file'), controller.updateDiary);
+router.post('/:id', upload.array('files'), controller.updateDiary);
 
 module.exports = router;

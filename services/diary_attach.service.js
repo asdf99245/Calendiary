@@ -6,6 +6,9 @@ module.exports = {
   uploadImage: async function (diary_id, file) {
     await diaryAttachRepository.createOne(diary_id, file);
   },
+  uploadImages: async function (diary_id, files) {
+    await diaryAttachRepository.createMany(diary_id, files);
+  },
   findOneByDiaryId: async function (diary_id) {
     return await diaryAttachRepository.findOneByFilter({ diary_id });
   },
