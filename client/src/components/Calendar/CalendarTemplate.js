@@ -102,8 +102,8 @@ function CalendarTemplate() {
           diary_text: text,
           Diary_attaches: attaches,
         } = diary;
-        const imgSrc = attaches.length > 0 && attaches[0].file_path;
-        dispatch(setDiary([id, title, text, imgSrc]));
+
+        dispatch(setDiary([id, title, text, attaches]));
       }
       dispatch(modalOpen([date, type]));
     }

@@ -8,6 +8,7 @@ import ModalWrite from './ModalWrite';
 import ModalButton from './ModalButton';
 import QUERY_KEY from '../../libs/react-query/queryKey';
 import { MODAL_TYPE } from '../../utils/constants';
+import { convertURLToFile } from '../../utils/file';
 
 const Form = styled.form`
   display: flex;
@@ -61,13 +62,8 @@ function ModalForm({
   diaryImg,
 }) {
   const [images, setImages] = useState([]);
-  const [img, setImg] = useState({
-    imgURL: null,
-    imgFile: null,
-  });
-  const { imgURL, imgFile } = img;
-  const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const { mutate: writeDiary } = useMutation((infos) => onWrite(infos), {
     onSuccess: (res) => {
@@ -100,43 +96,46 @@ function ModalForm({
   };
 
   useEffect(() => {
-    if (modalType === MODAL_TYPE.UPDATE) {
+    if (modalType !== MODAL_TYPE.UPDATE) return;
+
+    (async () => {
       setDiary({
         ...diary,
         title: diaryTitle,
         text: diaryText,
       });
+
       if (diaryImg) {
-        setImg({
-          ...img,
-          imgURL: diaryImg,
-        });
+        setImages(
+          await Promise.all(
+            diaryImg.map((image) => convertURLToFile(image.file_path))
+          )
+        );
       }
-    }
+    })();
   }, [modalType]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (!title.trim() || !text.trim()) {
       alert('제목과 내용을 모두 작성해주세요.');
       return;
     }
 
+    const formdata = new FormData();
+
     if (modalType === MODAL_TYPE.WRITE) {
-      // 글 쓰기
-      const formdata = new FormData();
       formdata.append('diary_date', date);
       formdata.append('diary_title', title);
       formdata.append('diary_text', text);
-      if (imgFile) formdata.append('file', imgFile);
+      images.forEach((image) => formdata.append('files', image));
       writeDiary(formdata);
     } else {
-      // 글 수정
-      const formdata = new FormData();
       formdata.append('diary_title', title);
       formdata.append('diary_text', text);
-      if (!imgURL) formdata.append('isDeleteImg', true);
-      if (imgFile) formdata.append('file', imgFile);
+      // if (!imgURL) formdata.append('isDeleteImg', true);
+      images.forEach((image) => formdata.append('files', image));
       updateDiary({ id: diaryId, infos: formdata });
     }
   };

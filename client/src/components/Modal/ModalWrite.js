@@ -91,7 +91,7 @@ function ModalWrite({ diary, images, setImages, onChange }) {
   useEffect(() => {
     setBlobURLs(
       images.map((image) => {
-        return { id: image.id, url: URL.createObjectURL(image) };
+        return { name: image.name, url: URL.createObjectURL(image) };
       })
     );
 
@@ -155,7 +155,7 @@ function ModalWrite({ diary, images, setImages, onChange }) {
       />
       <Upload onClick={onClickUpload}>
         {blobURLs.map((blobURL) => (
-          <PreviewBox key={blobURL.id}>
+          <PreviewBox key={blobURL.name}>
             <Preview src={blobURL.url} />
             <FileDelete onClick={(e) => onClickDelete(e, blobURL.url)} />
           </PreviewBox>

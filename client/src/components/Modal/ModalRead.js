@@ -64,7 +64,7 @@ const ModalFooter = styled.div`
   `};
 `;
 
-function ModalRead({ id, title, text, image }) {
+function ModalRead({ id, title, text, images }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -86,7 +86,14 @@ function ModalRead({ id, title, text, image }) {
       <ModalBody>
         <Title>{title}</Title>
         <Contents>{text}</Contents>
-        {image && <Image src={image} alt="테스트" />}
+        {images &&
+          images.map((image) => (
+            <Image
+              key={image.file_path}
+              src={image.file_path}
+              alt="첨부이미지"
+            />
+          ))}
       </ModalBody>
       <ModalFooter>
         <ModalButton onClick={switchToUpdateMode}>수정</ModalButton>

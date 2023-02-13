@@ -94,7 +94,7 @@ function ModalTemplate() {
             id={diaryId}
             title={diaryTitle}
             text={diaryText}
-            image={diaryImg}
+            images={diaryImg}
           />
         ) : (
           <ModalForm
